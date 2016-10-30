@@ -1,0 +1,47 @@
+﻿using ModernRoute.WildData.Attributes;
+using ModernRoute.WildData.Models;
+using System;
+
+namespace MeteringDevices.Database
+{
+
+    [Storage("CurrentValues")]
+    class CurrentMeteringValue : IReadOnlyModel
+    {
+        [Column("When")]
+        public virtual DateTime When
+        {
+            get;
+            set;
+        }
+
+        [Column("Day")]
+        public int Day
+        {
+            get;
+            set;
+        }
+
+        [Column("Night")]
+        public int Night
+        {
+            get;
+            set;
+        }
+
+
+        [Column("Hot")]
+        public int Hot
+        {
+            get;
+            set;
+        }
+
+        [Column("Cold")]
+        public int Cold
+        {
+            get;
+            set;
+        }
+    }
+}
