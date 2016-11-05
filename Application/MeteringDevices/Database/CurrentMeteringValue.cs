@@ -43,5 +43,19 @@ namespace MeteringDevices.Database
             get;
             set;
         }
+
+        [Column("Kitchen")]
+        public int Kitchen
+        {
+            get;
+            set;
+        }
+
+        [Column("Room")]
+        public int Room
+        {
+            get;
+            set;
+        }
     }
 }

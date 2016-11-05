@@ -7,6 +7,8 @@ CREATE TABLE "Values" (
     "Night" INT NOT NULL,
     "Hot" INT NOT NULL,
     "Cold" INT NOT NULL,
+    "Kitchen" INT NOT NULL,
+    "Room" INT NOT NULL,
     UNIQUE ("When")
 );
 
@@ -15,11 +17,13 @@ CREATE VIEW "CurrentValues" (
     "Day",
     "Night",
     "Hot",
-    "Cold"
+    "Cold",
+    "Kitchen",
+    "Room"
 ) AS
 WITH
-    "Last" AS (SELECT "When", "Day", "Night", "Hot", "Cold" FROM "Values" ORDER BY "When" DESC LIMIT 1),
-    "PreLast" AS (SELECT "When", "Day", "Night", "Hot", "Cold" FROM "Values" ORDER BY "When" DESC LIMIT 1 OFFSET 1),
+    "Last" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "Values" ORDER BY "When" DESC LIMIT 1),
+    "PreLast" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "Values" ORDER BY "When" DESC LIMIT 1 OFFSET 1),
     "Diff" AS (
 	SELECT
 	    EXTRACT(EPOCH FROM "Last"."When" - "PreLast"."When") AS "Interval",
@@ -27,7 +31,9 @@ WITH
 	    "Last"."Day" - "PreLast"."Day" AS "Day",
 	    "Last"."Night" - "PreLast"."Night" AS "Night",
 	    "Last"."Hot" - "PreLast"."Hot" AS "Hot",
-	    "Last"."Cold" - "PreLast"."Cold" AS "Cold"
+	    "Last"."Cold" - "PreLast"."Cold" AS "Cold",
+	    "Last"."Kitchen" - "PreLast"."Kitchen" AS "Kitchen",
+	    "Last"."Room" - "PreLast"."Room" AS "Room"
 	FROM
 	    "Last"
 	JOIN
@@ -40,7 +46,9 @@ SELECT
     CAST(TRUNC("Last"."Day" + "Diff"."Day" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Day",
     CAST(TRUNC("Last"."Night" + "Diff"."Night" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Night",
     CAST(TRUNC("Last"."Hot" + "Diff"."Hot" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Hot",
-    CAST(TRUNC("Last"."Cold" + "Diff"."Cold" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Cold"
+    CAST(TRUNC("Last"."Cold" + "Diff"."Cold" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Cold",
+    CAST(TRUNC("Last"."Kitchen" + "Diff"."Kitchen" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Kitchen",
+    CAST(TRUNC("Last"."Room" + "Diff"."Room" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Room"
 FROM
     "Last"
 JOIN

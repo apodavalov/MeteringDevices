@@ -33,7 +33,9 @@ namespace MeteringDevices
                         int day = GetTextBoxIntValue(tb_Day);
                         int night = GetTextBoxIntValue(tb_Night);
                         int cold = GetTextBoxIntValue(tb_Cold);
-                        int hot = GetTextBoxIntValue(tb_Hot);                       
+                        int hot = GetTextBoxIntValue(tb_Hot);
+                        int kitchen = GetTextBoxIntValue(tb_Kitchen);
+                        int room = GetTextBoxIntValue(tb_Room);                       
 
                         CurrentMeteringValue currentValue = session.CurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
 
@@ -45,13 +47,18 @@ namespace MeteringDevices
                             int diffNight = Math.Abs(currentValue.Night - night);
                             int diffHot = Math.Abs(currentValue.Hot - hot);
                             int diffCold = Math.Abs(currentValue.Cold - cold);
+                            int diffKitchen = Math.Abs(currentValue.Kitchen - kitchen);
+                            int diffRoom = Math.Abs(currentValue.Room - room);
 
                             dialogResult = MessageBox.Show(
                                 string.Format("Разница между предсказанными и введёнными значениями.{0}{0}" + 
                                               "Дневное энергопотребление.{0}- Предсказанное: {1}, введённое: {2}, разница (абс. зн.): {3}.{0}" +
                                               "Ночное энергопотребление.{0}- Предсказанное: {4}, введённое: {5}, разница (абс. зн.): {6}.{0}" +
                                               "Холодная вода.{0}- Предсказанное: {7}, введённое: {8}, разница (абс. зн.): {9}.{0}" +
-                                              "Горячая вода.{0}- Предсказанное: {10}, введённое: {11}, разница (абс. зн.): {12}.{0}{0}Подтверждаете отправку введённых значений?", 
+                                              "Горячая вода.{0}- Предсказанное: {10}, введённое: {11}, разница (абс. зн.): {12}.{0}" +
+                                              "Отопление (кухня).{0}- Предсказанное: {13}, введённое: {14}, разница (абс. зн.): {15}.{0}" +
+                                              "Отопление (комната).{0}- Предсказанное: {16}, введённое: {17}, разница (абс. зн.): {18}.{0}" +
+                                              "{0}Подтверждаете отправку введённых значений?", 
                                               Environment.NewLine,
                                               currentValue.Day,
                                               day,
@@ -64,7 +71,13 @@ namespace MeteringDevices
                                               diffCold,
                                               currentValue.Hot,
                                               hot, 
-                                              diffHot), 
+                                              diffHot,
+                                              currentValue.Kitchen,
+                                              kitchen,
+                                              diffKitchen,
+                                              currentValue.Room,
+                                              room,
+                                              diffRoom), 
                                               "Подтверждение", 
                                               MessageBoxButtons.YesNo, 
                                               MessageBoxIcon.Question, 
@@ -85,7 +98,9 @@ namespace MeteringDevices
                             Day = day,
                             Night = night,
                             Cold = cold,
-                            Hot = hot
+                            Hot = hot,
+                            Kitchen = kitchen,
+                            Room = room
                         };
 
                         WriteResult result = session.MeteringValueRepository.Store(value);
@@ -166,6 +181,8 @@ namespace MeteringDevices
                     tb_Hot.Text = currentValue.Hot.ToString();
                     tb_Night.Text = currentValue.Night.ToString();
                     tb_Day.Text = currentValue.Day.ToString();
+                    tb_Kitchen.Text = currentValue.Kitchen.ToString();
+                    tb_Room.Text = currentValue.Room.ToString();
                 }
             }
 
