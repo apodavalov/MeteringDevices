@@ -152,6 +152,11 @@ namespace MeteringDevices.Service
 
             CheckResult(deviceInfoResponse.Result);
 
+            if (!deviceInfoResponse.Settings.InputAllowed)
+            {
+                throw new InvalidOperationException("Input is not allowed.");
+            }
+
             IDictionary<string, DeviceInfo> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId);
 
             return values.Select(d => dictionary[d.Key].SetValue(d.Value)).ToList();
