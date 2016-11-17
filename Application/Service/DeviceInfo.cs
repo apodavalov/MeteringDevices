@@ -17,12 +17,5 @@ namespace MeteringDevices.Service
 
         [JsonIgnore]
         public int Value { get; set; }
-
-        public DeviceInfo SetValue(int value)
-        {
-            Value = value;
-
-            return this;
-        }
     }
 }

@@ -69,7 +69,7 @@ namespace MeteringDevices.Service
 
         public void PutValues(IDictionary<string, int> values, string accountNumber)
         {
-            FlatModel flat = GetFlagInfo(accountNumber);
+            FlatModel flat = GetFlatInfo(accountNumber);
             IList<DeviceInfo> devices = CollectDevicesInfo(values, flat);
             PutValues(flat, devices);
         }
@@ -159,7 +159,17 @@ namespace MeteringDevices.Service
 
             IDictionary<string, DeviceInfo> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId);
 
-            return values.Select(d => dictionary[d.Key].SetValue(d.Value)).ToList();
+            if (dictionary.Count != values.Count)
+            {
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,"The numbers of devices are different: {0} and {1}.", dictionary.Count, values.Count));
+            }
+
+            foreach (KeyValuePair<string,DeviceInfo> pair in dictionary)
+            {
+                pair.Value.Value = values[pair.Key];
+            }
+
+            return dictionary.Values.ToList();
         }
 
         private void CheckResult(ResponseResult result)
@@ -170,7 +180,7 @@ namespace MeteringDevices.Service
             }
         }
 
-        private FlatModel GetFlagInfo(string accountNumber)
+        private FlatModel GetFlatInfo(string accountNumber)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string> { { _SessionTokenValue, _SessionToken } };
 
@@ -265,11 +275,6 @@ namespace MeteringDevices.Service
         private static string GetSchema(bool secured)
         {
             return secured ? "https" : "http";
-        }
-
-        private static string GetSchema()
-        {
-            return GetSchema(_Secured);
         }
 
         private static Uri BuildUri(bool secured, string hostName, string loginPath, IDictionary<string,string> query = null)
