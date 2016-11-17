@@ -33,7 +33,7 @@ namespace MeteringDevices.Service
                     currentValues = session.CurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
                 }
 
-                IDictionary<string, int> values = new Dictionary<string, int>
+                IDictionary<string, int> values = new Dictionary<string, int>(StringComparer.Ordinal)
                 {
                     { ConfigurationManager.AppSettings[_MeteringDeviceDayIdKey], currentValues.Day },
                     { ConfigurationManager.AppSettings[_MeteringDeviceNightIdKey], currentValues.Night },

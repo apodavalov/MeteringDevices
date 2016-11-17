@@ -44,6 +44,16 @@ namespace MeteringDevices.Service
 
         public void Login(string userName, string password)
         {
+            if (userName == null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
+
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, _LoginPath));
             PopulateHeaders(httpWebRequest, true);
 
@@ -69,6 +79,16 @@ namespace MeteringDevices.Service
 
         public void PutValues(IDictionary<string, int> values, string accountNumber)
         {
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            if (accountNumber == null)
+            {
+                throw new ArgumentNullException(nameof(accountNumber));
+            }
+
             FlatModel flat = GetFlatInfo(accountNumber);
             IList<DeviceInfo> devices = CollectDevicesInfo(values, flat);
             PutValues(flat, devices);
@@ -157,7 +177,7 @@ namespace MeteringDevices.Service
                 throw new InvalidOperationException("Input is not allowed.");
             }
 
-            IDictionary<string, DeviceInfo> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId);
+            IDictionary<string, DeviceInfo> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId, StringComparer.Ordinal);
 
             if (dictionary.Count != values.Count)
             {
@@ -182,7 +202,7 @@ namespace MeteringDevices.Service
 
         private FlatModel GetFlatInfo(string accountNumber)
         {
-            IDictionary<string, string> dictionary = new Dictionary<string, string> { { _SessionTokenValue, _SessionToken } };
+            IDictionary<string, string> dictionary = new Dictionary<string, string>(StringComparer.Ordinal)  { { _SessionTokenValue, _SessionToken } };
 
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, string.Format(CultureInfo.InvariantCulture,_TsjPathTemplate, _UserId), dictionary));
             PopulateHeaders(httpWebRequest, false);

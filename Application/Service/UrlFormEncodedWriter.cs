@@ -95,6 +95,11 @@ namespace MeteringDevices.Service
 
         public static string FormatDictionary(IDictionary<string, string> nameValueCollection)
         {
+            if (nameValueCollection == null)
+            {
+                throw new ArgumentNullException(nameof(nameValueCollection));
+            }
+
             StringBuilder stringBuilder = new StringBuilder();
 
             bool first = true;
