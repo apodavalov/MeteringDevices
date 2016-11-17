@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MeteringDevices")]
+[assembly: AssemblyTitle("MeteringDevices.Data")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("af2ce5c1-ff26-43a9-a509-3a984b3f6893")]
+[assembly: Guid("30eb6f25-195f-4d27-9980-19563dd7b33d")]
 
 // Version information for an assembly consists of the following four values:
 //

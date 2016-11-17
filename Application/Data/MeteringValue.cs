@@ -2,10 +2,10 @@
 using ModernRoute.WildData.Models;
 using System;
 
-namespace MeteringDevices.Database
+namespace MeteringDevices.Data
 {
     [Storage("Values")]
-    class MeteringValue : CurrentMeteringValue, IReadWriteModel<int>
+    public class MeteringValue : CurrentMeteringValue, IReadWriteModel<int>
     {
         private bool _Persistent = false;
 

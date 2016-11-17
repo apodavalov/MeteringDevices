@@ -3,11 +3,10 @@ using ModernRoute.WildData.Npgsql.Core;
 using System;
 using System.Configuration;
 
-namespace MeteringDevices.Database
+namespace MeteringDevices.Data
 {
     class Session : BaseSession, ISession
     {
-        private const string _ConnectionStringName = "Main";
         private Lazy<IReadOnlyRepository<CurrentMeteringValue>> _CurrentMeteringValueRepository;
         private Lazy<IReadWriteRepository<MeteringValue, int>> _MeteringValueRepository;
 
@@ -31,11 +30,6 @@ namespace MeteringDevices.Database
             {
                 return _MeteringValueRepository.Value;
             }
-        }
-
-        public static Session OpenSession()
-        {
-            return new Session(ConfigurationManager.ConnectionStrings[_ConnectionStringName].ConnectionString);
         }
     }
 }

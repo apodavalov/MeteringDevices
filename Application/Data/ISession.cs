@@ -1,8 +1,8 @@
 ﻿using ModernRoute.WildData.Core;
 
-namespace MeteringDevices.Database
+namespace MeteringDevices.Data
 {
-    interface ISession : IBaseSession
+    public interface ISession : IBaseSession
     {
         IReadOnlyRepository<CurrentMeteringValue> CurrentMeteringValueRepository { get; }
         IReadWriteRepository<MeteringValue, int> MeteringValueRepository { get; }

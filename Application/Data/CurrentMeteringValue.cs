@@ -2,11 +2,10 @@
 using ModernRoute.WildData.Models;
 using System;
 
-namespace MeteringDevices.Database
+namespace MeteringDevices.Data
 {
-
     [Storage("CurrentValues")]
-    class CurrentMeteringValue : IReadOnlyModel
+    public class CurrentMeteringValue : IReadOnlyModel
     {
         [Column("When")]
         public virtual DateTime When

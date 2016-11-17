@@ -1,5 +1,6 @@
-﻿using MeteringDevices.Database;
+﻿using MeteringDevices.Data;
 using ModernRoute.WildData.Core;
+using Ninject;
 using System;
 using System.Data;
 using System.Drawing;
@@ -21,7 +22,7 @@ namespace MeteringDevices
         {
             try
             {
-                using (ISession session = Session.OpenSession())
+                using (ISession session = Program.Kernel.Get<ISession>())
                 {
                     using (session.Transaction = session.BeginTransaction(IsolationLevel.Snapshot))
                     {
@@ -143,7 +144,7 @@ namespace MeteringDevices
         {
             try
             {
-                using (ISession session = Session.OpenSession())
+                using (ISession session = Program.Kernel.Get<ISession>())
                 {
                     if (!CheckEnable(session, true))
                     {
