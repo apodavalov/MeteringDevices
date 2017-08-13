@@ -57,9 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CurrentMeteringValue.cs" />
+    <Compile Include="Kzn\CurrentMeteringValue.cs" />
     <Compile Include="ISession.cs" />
-    <Compile Include="MeteringValue.cs" />
+    <Compile Include="Kzn\MeteringValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.cs" />
     <Compile Include="Session.cs" />

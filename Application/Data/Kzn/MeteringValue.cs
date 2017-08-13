@@ -2,9 +2,9 @@
 using ModernRoute.WildData.Models;
 using System;
 
-namespace MeteringDevices.Data
+namespace MeteringDevices.Data.Kzn
 {
-    [Storage("Values")]
+    [Storage("KznValues")]
     public class MeteringValue : CurrentMeteringValue, IReadWriteModel<int>
     {
         private bool _Persistent = false;

@@ -67,18 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceCounters.cs" />
-    <Compile Include="DeviceInfo.cs" />
-    <Compile Include="ResponseResult.cs" />
-    <Compile Include="DeviceSettings.cs" />
-    <Compile Include="DeviceInfoResponse.cs" />
-    <Compile Include="FlatModel.cs" />
-    <Compile Include="GovService.cs" />
-    <Compile Include="LoginResponse.cs" />
+    <Compile Include="Kzn\DeviceCounters.cs" />
+    <Compile Include="Kzn\DeviceInfo.cs" />
+    <Compile Include="Kzn\ResponseResult.cs" />
+    <Compile Include="Kzn\DeviceSettings.cs" />
+    <Compile Include="Kzn\DeviceInfoResponse.cs" />
+    <Compile Include="Kzn\FlatModel.cs" />
+    <Compile Include="Kzn\GovService.cs" />
+    <Compile Include="Kzn\LoginResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetValuesResponse.cs" />
-    <Compile Include="UrlFormEncodedWriter.cs" />
+    <Compile Include="Kzn\SetValuesResponse.cs" />
+    <Compile Include="Kzn\UrlFormEncodedWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

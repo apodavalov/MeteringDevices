@@ -1,4 +1,5 @@
 ﻿using MeteringDevices.Data;
+using MeteringDevices.Data.Kzn;
 using ModernRoute.WildData.Core;
 using Ninject;
 using System;

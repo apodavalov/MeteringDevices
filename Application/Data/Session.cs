@@ -1,22 +1,21 @@
 ﻿using ModernRoute.WildData.Core;
 using ModernRoute.WildData.Npgsql.Core;
 using System;
-using System.Configuration;
 
 namespace MeteringDevices.Data
 {
     class Session : BaseSession, ISession
     {
-        private Lazy<IReadOnlyRepository<CurrentMeteringValue>> _CurrentMeteringValueRepository;
-        private Lazy<IReadWriteRepository<MeteringValue, int>> _MeteringValueRepository;
+        private Lazy<IReadOnlyRepository<Kzn.CurrentMeteringValue>> _CurrentMeteringValueRepository;
+        private Lazy<IReadWriteRepository<Kzn.MeteringValue, int>> _MeteringValueRepository;
 
         public Session(string connectionString) : base(connectionString)
         {
-            _CurrentMeteringValueRepository = new Lazy<IReadOnlyRepository<CurrentMeteringValue>>(CreateReadOnlyRepository<CurrentMeteringValue>);
-            _MeteringValueRepository = new Lazy<IReadWriteRepository<MeteringValue,int>>(CreateReadWriteRepository<MeteringValue,int>);
+            _CurrentMeteringValueRepository = new Lazy<IReadOnlyRepository<Kzn.CurrentMeteringValue>>(CreateReadOnlyRepository<Kzn.CurrentMeteringValue>);
+            _MeteringValueRepository = new Lazy<IReadWriteRepository<Kzn.MeteringValue,int>>(CreateReadWriteRepository<Kzn.MeteringValue,int>);
         }
 
-        public IReadOnlyRepository<CurrentMeteringValue> CurrentMeteringValueRepository
+        public IReadOnlyRepository<Kzn.CurrentMeteringValue> CurrentMeteringValueRepository
         {
             get
             {
@@ -24,7 +23,7 @@ namespace MeteringDevices.Data
             }
         }
 
-        public IReadWriteRepository<MeteringValue, int> MeteringValueRepository
+        public IReadWriteRepository<Kzn.MeteringValue, int> MeteringValueRepository
         {
             get
             {

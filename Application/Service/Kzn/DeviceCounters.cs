@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MeteringDevices.Service
+namespace MeteringDevices.Service.Kzn
 {
     public class DeviceCounters
     {        

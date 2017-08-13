@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MeteringDevices.Service
+namespace MeteringDevices.Service.Kzn
 {
     public class SetValuesResponse
     {

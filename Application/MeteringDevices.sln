@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{AF2CE5C1-FF26-43A9-A509-3A984B3F6893}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Kzn", "UI.Kzn\UI.Kzn.csproj", "{AF2CE5C1-FF26-43A9-A509-3A984B3F6893}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{30EB6F25-195F-4D27-9980-19563DD7B33D}"
 EndProject

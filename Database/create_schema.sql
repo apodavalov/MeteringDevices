@@ -1,6 +1,6 @@
 ALTER DEFAULT PRIVILEGES IN SCHEMA "public" GRANT SELECT,INSERT,UPDATE,DELETE ON TABLES TO "ValuesUser";
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA PUBLIC TO "ValuesUser";
-CREATE TABLE "Values" (
+CREATE TABLE "KznValues" (
     "Id" SERIAL PRIMARY KEY,
     "When" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "Day" INT NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "Values" (
     UNIQUE ("When")
 );
 
-CREATE VIEW "CurrentValues" (
+CREATE VIEW "KznCurrentValues" (
     "When",
     "Day",
     "Night",
@@ -22,8 +22,8 @@ CREATE VIEW "CurrentValues" (
     "Room"
 ) AS
 WITH
-    "Last" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "Values" ORDER BY "When" DESC LIMIT 1),
-    "PreLast" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "Values" ORDER BY "When" DESC LIMIT 1 OFFSET 1),
+    "Last" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "KznValues" ORDER BY "When" DESC LIMIT 1),
+    "PreLast" AS (SELECT "When", "Day", "Night", "Hot", "Cold", "Kitchen", "Room" FROM "KznValues" ORDER BY "When" DESC LIMIT 1 OFFSET 1),
     "Diff" AS (
 	SELECT
 	    EXTRACT(EPOCH FROM "Last"."When" - "PreLast"."When") AS "Interval",

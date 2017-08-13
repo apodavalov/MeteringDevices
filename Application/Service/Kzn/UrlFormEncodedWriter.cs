@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 
-namespace MeteringDevices.Service
+namespace MeteringDevices.Service.Kzn
 {
     public class UrlFormEncodedWriter : IDisposable
     {
