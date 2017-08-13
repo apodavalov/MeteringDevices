@@ -7,8 +7,8 @@
     <ProjectGuid>{AF2CE5C1-FF26-43A9-A509-3A984B3F6893}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MeteringDevices.UI</RootNamespace>
-    <AssemblyName>MeteringDevices.UI</AssemblyName>
+    <RootNamespace>MeteringDevices.UI.Kzn</RootNamespace>
+    <AssemblyName>MeteringDevices.UI.Kzn</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

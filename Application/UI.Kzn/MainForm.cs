@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace MeteringDevices
+namespace MeteringDevices.UI.Kzn
 {
     public partial class MainForm : Form
     {
@@ -39,7 +39,7 @@ namespace MeteringDevices
                         int kitchen = GetTextBoxIntValue(tb_Kitchen);
                         int room = GetTextBoxIntValue(tb_Room);                       
 
-                        CurrentMeteringValue currentValue = session.CurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
+                        CurrentMeteringValue currentValue = session.KznCurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
 
                         DialogResult dialogResult;
 
@@ -105,7 +105,7 @@ namespace MeteringDevices
                             Room = room
                         };
 
-                        WriteResult result = session.MeteringValueRepository.Store(value);
+                        WriteResult result = session.KznMeteringValueRepository.Store(value);
 
                         if (result.ResultType == WriteResultType.Ok)
                         {
@@ -162,7 +162,7 @@ namespace MeteringDevices
 
         private bool CheckEnable(ISession session, bool formLoading)
         {
-            MeteringValue value = session.MeteringValueRepository.Fetch().OrderByDescending(v => v.When).Take(1).AsEnumerable().SingleOrDefault();
+            MeteringValue value = session.KznMeteringValueRepository.Fetch().OrderByDescending(v => v.When).Take(1).AsEnumerable().SingleOrDefault();
 
             if (value != null)
             {
@@ -175,7 +175,7 @@ namespace MeteringDevices
 
             if (formLoading)
             {
-                CurrentMeteringValue currentValue = session.CurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
+                CurrentMeteringValue currentValue = session.KznCurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
 
                 if (currentValue != null)
                 {

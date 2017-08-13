@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace MeteringDevices
+namespace MeteringDevices.UI.Kzn
 {
     static class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace MeteringDevices
+﻿namespace MeteringDevices.UI.Kzn
 {
     partial class MainForm
     {

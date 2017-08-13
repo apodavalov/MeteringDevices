@@ -55,3 +55,43 @@ JOIN
     "Diff"
 ON
     0 = 0;
+
+CREATE TABLE "SpbValues" (
+    "Id" SERIAL PRIMARY KEY,
+    "When" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "Day" INT NOT NULL,
+    "Night" INT NOT NULL,
+    UNIQUE ("When")
+);
+
+CREATE VIEW "SpbCurrentValues" (
+    "When",
+    "Day",
+    "Night"
+) AS
+WITH
+    "Last" AS (SELECT "When", "Day", "Night" FROM "SpbValues" ORDER BY "When" DESC LIMIT 1),
+    "PreLast" AS (SELECT "When", "Day", "Night" FROM "SpbValues" ORDER BY "When" DESC LIMIT 1 OFFSET 1),
+    "Diff" AS (
+	SELECT
+	    EXTRACT(EPOCH FROM "Last"."When" - "PreLast"."When") AS "Interval",
+	    EXTRACT(EPOCH FROM CURRENT_TIMESTAMP - "Last"."When") AS "CurrentInterval",
+	    "Last"."Day" - "PreLast"."Day" AS "Day",
+	    "Last"."Night" - "PreLast"."Night" AS "Night"
+	FROM
+	    "Last"
+	JOIN
+	    "PreLast"
+	ON
+	    0 = 0
+    )
+SELECT
+    CURRENT_TIMESTAMP AS "When",
+    CAST(TRUNC("Last"."Day" + "Diff"."Day" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Day",
+    CAST(TRUNC("Last"."Night" + "Diff"."Night" / "Diff"."Interval" * "Diff"."CurrentInterval") AS INT) AS "Night"
+FROM
+    "Last"
+JOIN
+    "Diff"
+ON
+    0 = 0;

@@ -12,11 +12,13 @@ using System.Web;
 
 namespace MeteringDevices.Service.Kzn
 {
-    public class GovService
+    public class SenderService : ISendService
     {
         private const bool _Secured = true;
 
-        private const string _HostnameKey = "Service.Hostname";
+        private const string _UsernameKey = "Kzn.Service.Username";
+        private const string _PasswordKey = "Kzn.Service.Password";
+        private const string _HostnameKey = "Kzn.Service.Hostname";
         private const string _LoginPath = "api/users/sessions.json";
         private const string _TsjPathTemplate = "/api/v1/users/{0}/informers/tsj.json";
         private const string _GetCountersPath = "/api/v1/services/hcs/tsj/counters/get.json";
@@ -36,13 +38,18 @@ namespace MeteringDevices.Service.Kzn
             return ConfigurationManager.AppSettings[_HostnameKey];
         }
 
-        public GovService()
+        public SenderService()
+        {
+            Reset();
+        }
+
+        private void Reset()
         {
             _Hostname = new Lazy<string>(GetHostname);
             _Cookies.Add(new Cookie("device_view", "tablet", string.Empty, _Hostname.Value));
         }
 
-        public void Login(string userName, string password)
+        private void Login(string userName, string password)
         {
             if (userName == null)
             {
@@ -78,6 +85,20 @@ namespace MeteringDevices.Service.Kzn
         }
 
         public void PutValues(IDictionary<string, int> values, string accountNumber)
+        {
+            try
+            {
+                Login(ConfigUtils.GetStringFromConfig(_UsernameKey), ConfigUtils.GetStringFromConfig(_PasswordKey));
+                PutValuesInternal(values, accountNumber);
+            }
+            finally
+            {
+                _Cookies = new CookieContainer();
+                Reset();
+            }
+        }
+
+        private void PutValuesInternal(IDictionary<string, int> values, string accountNumber)
         {
             if (values == null)
             {

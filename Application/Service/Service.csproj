@@ -67,18 +67,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigUtils.cs" />
+    <Compile Include="IRetrieveService.cs" />
+    <Compile Include="ISendService.cs" />
     <Compile Include="Kzn\DeviceCounters.cs" />
     <Compile Include="Kzn\DeviceInfo.cs" />
     <Compile Include="Kzn\ResponseResult.cs" />
     <Compile Include="Kzn\DeviceSettings.cs" />
     <Compile Include="Kzn\DeviceInfoResponse.cs" />
     <Compile Include="Kzn\FlatModel.cs" />
-    <Compile Include="Kzn\GovService.cs" />
+    <Compile Include="Kzn\SenderService.cs" />
     <Compile Include="Kzn\LoginResponse.cs" />
+    <Compile Include="Kzn\RetrieverService.cs" />
+    <Compile Include="ProcessInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Kzn\SetValuesResponse.cs" />
     <Compile Include="Kzn\UrlFormEncodedWriter.cs" />
+    <Compile Include="Spb\SenderService.cs" />
+    <Compile Include="Spb\RetrieverService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

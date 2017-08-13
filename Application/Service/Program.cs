@@ -2,20 +2,16 @@
 using Ninject;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 
 namespace MeteringDevices.Service
 {
     class Program
     {
-        private const string _KznUsernameKey = "Kzn.Service.Username";
-        private const string _KznPasswordKey = "Kzn.Service.Password";
-        private const string _KznAccountNumberKey = "Kzn.Flat.AccountNumber";
-        private const string _KznMeteringDeviceDayIdKey = "Kzn.MeteringDevice.DayId";
-        private const string _KznMeteringDeviceNightIdKey = "Kzn.MeteringDevice.NightId";
-        private const string _KznMeteringDeviceColdIdKey = "Kzn.MeteringDevice.ColdId";
-        private const string _KznMeteringDeviceHotIdKey = "Kzn.MeteringDevice.HotId";        
+        private const string _KznAccountNumberKey = "Kzn.AccountNumber";
+        private const string _KznEnabledKey = "Kzn.Enabled";
+        
+        private const string _SpbAccountNumberKey = "Spb.AccountNumber";
+        private const string _SpbEnabledKey = "Spb.Enabled";
 
         public static IKernel Kernel { get; private set; }
 
@@ -24,32 +20,53 @@ namespace MeteringDevices.Service
             Kernel = new StandardKernel();
             Kernel.Load(new Register());
 
-            try
+            ProcessInfo[] processInfos = new[] 
             {
-                Data.Kzn.CurrentMeteringValue currentValues;
+                new ProcessInfo(
+                    new Kzn.RetrieverService(), 
+                    new Kzn.SenderService(), 
+                    ConfigUtils.GetBoolFromConfig(_KznEnabledKey),
+                    ConfigUtils.GetStringFromConfig(_KznAccountNumberKey)
+                ),
+                new ProcessInfo(
+                    new Spb.RetrieverService(), 
+                    new Spb.SenderService(), 
+                    ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
+                    ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)
+                )
+            };
 
-                using (ISession session = Kernel.Get<ISession>())
+            foreach (ProcessInfo processInfo in processInfos)
+            {
+                if (!processInfo.Enabled)
                 {
-                    currentValues = session.CurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
+                    continue;
                 }
 
-                IDictionary<string, int> values = new Dictionary<string, int>(StringComparer.Ordinal)
+                try
                 {
-                    { ConfigurationManager.AppSettings[_KznMeteringDeviceDayIdKey], currentValues.Day },
-                    { ConfigurationManager.AppSettings[_KznMeteringDeviceNightIdKey], currentValues.Night },
-                    { ConfigurationManager.AppSettings[_KznMeteringDeviceColdIdKey], currentValues.Cold },
-                    { ConfigurationManager.AppSettings[_KznMeteringDeviceHotIdKey], currentValues.Hot }
-                };
+                    IDictionary<string, int> values = Retrieve(processInfo.Retriever);
 
-                Kzn.GovService govService = new Kzn.GovService();
+                    if (values == null)
+                    {
+                        continue;
+                    }
 
-                govService.Login(ConfigurationManager.AppSettings[_KznUsernameKey], ConfigurationManager.AppSettings[_KznPasswordKey]);                
-                govService.PutValues(values, ConfigurationManager.AppSettings[_KznAccountNumberKey]);
+                    processInfo.Sender.PutValues(values, processInfo.AccountNumber);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                }
             }
-            catch (Exception ex)
+        }
+
+        private static IDictionary<string, int> Retrieve(IRetrieveService retriever)
+        {
+            using (ISession session = Kernel.Get<ISession>())
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                return retriever.GetCurrentValues(session);
             }
         }
     }
