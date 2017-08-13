@@ -13,6 +13,10 @@ namespace MeteringDevices.Service
         private const string _SpbAccountNumberKey = "Spb.AccountNumber";
         private const string _SpbEnabledKey = "Spb.Enabled";
 
+        private const string _TelegramNotifierToken = "Telegram.Notifier.Token";
+        private const string _TelegramNotifierChatId = "Telegram.Notifier.ChatId";
+
+
         public static IKernel Kernel { get; private set; }
 
         static void Main(string[] args)
@@ -35,6 +39,8 @@ namespace MeteringDevices.Service
                     ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)
                 )
             };
+
+            TelegramNotifier notifier = new TelegramNotifier(ConfigUtils.GetStringFromConfig(_TelegramNotifierToken));
 
             foreach (ProcessInfo processInfo in processInfos)
             {

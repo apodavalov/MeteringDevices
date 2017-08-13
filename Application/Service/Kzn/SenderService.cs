@@ -31,11 +31,12 @@ namespace MeteringDevices.Service.Kzn
         private string _SessionToken;
         private string _UserId;
 
-        private Lazy<string> _Hostname;
-
-        private string GetHostname()
+        private string _Host
         {
-            return ConfigurationManager.AppSettings[_HostnameKey];
+            get
+            {
+                return ConfigUtils.GetStringFromConfig(_HostnameKey);
+            }
         }
 
         public SenderService()
@@ -45,8 +46,7 @@ namespace MeteringDevices.Service.Kzn
 
         private void Reset()
         {
-            _Hostname = new Lazy<string>(GetHostname);
-            _Cookies.Add(new Cookie("device_view", "tablet", string.Empty, _Hostname.Value));
+            _Cookies.Add(new Cookie("device_view", "tablet", string.Empty, _Host));
         }
 
         private void Login(string userName, string password)
@@ -61,7 +61,7 @@ namespace MeteringDevices.Service.Kzn
                 throw new ArgumentNullException(nameof(password));
             }
 
-            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, _LoginPath));
+            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _LoginPath));
             PopulateHeaders(httpWebRequest, true);
 
             PopulateLoginParams(userName, password, httpWebRequest);
@@ -117,7 +117,7 @@ namespace MeteringDevices.Service.Kzn
 
         private void PutValues(FlatModel flat, IList<DeviceInfo> devices)
         {
-            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, _SetCountersPath));
+            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _SetCountersPath));
             PopulateHeaders(httpWebRequest, true);
 
             using (Stream stream = httpWebRequest.GetRequestStream())
@@ -162,7 +162,7 @@ namespace MeteringDevices.Service.Kzn
 
         private IList<DeviceInfo> CollectDevicesInfo(IDictionary<string, int> values, FlatModel flat)
         {
-            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, _GetCountersPath));
+            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _GetCountersPath));
             PopulateHeaders(httpWebRequest, true);
 
             using (Stream stream = httpWebRequest.GetRequestStream())
@@ -225,7 +225,7 @@ namespace MeteringDevices.Service.Kzn
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>(StringComparer.Ordinal)  { { _SessionTokenValue, _SessionToken } };
 
-            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Hostname.Value, string.Format(CultureInfo.InvariantCulture,_TsjPathTemplate, _UserId), dictionary));
+            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, string.Format(CultureInfo.InvariantCulture,_TsjPathTemplate, _UserId), dictionary));
             PopulateHeaders(httpWebRequest, false);
 
             IList<FlatModel> message = null;

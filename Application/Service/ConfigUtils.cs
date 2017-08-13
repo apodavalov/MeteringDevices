@@ -22,5 +22,17 @@ namespace MeteringDevices.Service
             
             return result;
         }
+        public static long GetLongFromConfig(string key, long defaultValue = 0)
+        {
+            string stringValue = GetStringFromConfig(key, string.Empty);
+            long result;
+
+            if (!long.TryParse(stringValue, out result))
+            {
+                return defaultValue;
+            }
+
+            return result;
+        }
     }
 }
