@@ -8,9 +8,9 @@ namespace MeteringDevices.Service
         {
             IKernel kernel = new StandardKernel();
             kernel.Load(new Data.Register());
-            kernel.Load(new Service.Register());
+            kernel.Load(new Core.Register());
 
-            kernel.Get<IApp>().Run();
+            kernel.Get<Core.IApp>().Run();
         }
     }
 }
