@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -12,7 +11,7 @@ using System.Web;
 
 namespace MeteringDevices.Service.Kzn
 {
-    public class SenderService : ISendService
+    class SendService : ISendService
     {
         private const bool _Secured = true;
 
@@ -25,9 +24,9 @@ namespace MeteringDevices.Service.Kzn
         private const string _SetCountersPath = "/api/v1/services/hcs/tsj/counters/set.json";
         private const string _SessionTokenValue = "session_token";
         private CookieContainer _Cookies = new CookieContainer();
-        private UTF8Encoding _UTF8Encoding = new UTF8Encoding(false);
-        private JsonSerializer _JsonSerializer = new JsonSerializer();
-        private Random _Random = new Random();
+        private readonly UTF8Encoding _UTF8Encoding = new UTF8Encoding(false);
+        private readonly Newtonsoft.Json.JsonSerializer _JsonSerializer = new Newtonsoft.Json.JsonSerializer();
+        private readonly Random _Random = new Random();
         private string _SessionToken;
         private string _UserId;
 
@@ -39,7 +38,7 @@ namespace MeteringDevices.Service.Kzn
             }
         }
 
-        public SenderService()
+        public SendService()
         {
             Reset();
         }
@@ -84,12 +83,12 @@ namespace MeteringDevices.Service.Kzn
             _UserId = message.UserId;
         }
 
-        public void PutValues(IDictionary<string, int> values, string accountNumber)
+        public void PutValues(string accountNumber, IDictionary<string, int> values)
         {
             try
             {
                 Login(ConfigUtils.GetStringFromConfig(_UsernameKey), ConfigUtils.GetStringFromConfig(_PasswordKey));
-                PutValuesInternal(values, accountNumber);
+                PutValuesInternal(accountNumber, values);
             }
             finally
             {
@@ -98,16 +97,11 @@ namespace MeteringDevices.Service.Kzn
             }
         }
 
-        private void PutValuesInternal(IDictionary<string, int> values, string accountNumber)
+        private void PutValuesInternal(string accountNumber, IDictionary<string, int> values)
         {
             if (values == null)
             {
                 throw new ArgumentNullException(nameof(values));
-            }
-
-            if (accountNumber == null)
-            {
-                throw new ArgumentNullException(nameof(accountNumber));
             }
 
             FlatModel flat = GetFlatInfo(accountNumber);

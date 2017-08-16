@@ -75,26 +75,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
     <Compile Include="ConfigUtils.cs" />
+    <Compile Include="DataProvider.cs" />
     <Compile Include="IRetrieveService.cs" />
     <Compile Include="ISendService.cs" />
+    <Compile Include="IApp.cs" />
+    <Compile Include="IDataProvider.cs" />
+    <Compile Include="ISessionFactory.cs" />
     <Compile Include="Kzn\DeviceCounters.cs" />
     <Compile Include="Kzn\DeviceInfo.cs" />
     <Compile Include="Kzn\ResponseResult.cs" />
     <Compile Include="Kzn\DeviceSettings.cs" />
     <Compile Include="Kzn\DeviceInfoResponse.cs" />
     <Compile Include="Kzn\FlatModel.cs" />
-    <Compile Include="Kzn\SenderService.cs" />
+    <Compile Include="Kzn\SendService.cs" />
     <Compile Include="Kzn\LoginResponse.cs" />
     <Compile Include="Kzn\RetrieverService.cs" />
-    <Compile Include="ProcessInfo.cs" />
+    <Compile Include="Register.cs" />
+    <Compile Include="RestSharp\IJsonSerializerFactory.cs" />
+    <Compile Include="RestSharp\IRestSharpFactory.cs" />
+    <Compile Include="RestSharp\JsonSerializerFactory.cs" />
+    <Compile Include="RestSharp\NewtonsoftJsonDeserializer.cs" />
+    <Compile Include="RestSharp\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Kzn\SetValuesResponse.cs" />
     <Compile Include="Kzn\UrlFormEncodedWriter.cs" />
-    <Compile Include="Spb\SenderService.cs" />
+    <Compile Include="RestSharp\RestSharpFactory.cs" />
+    <Compile Include="SessionFactory.cs" />
+    <Compile Include="Spb\SendService.cs" />
     <Compile Include="Spb\RetrieverService.cs" />
-    <Compile Include="TelegramNotifier.cs" />
+    <Compile Include="Notification\INotifier.cs" />
+    <Compile Include="Notification\TelegramNotifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

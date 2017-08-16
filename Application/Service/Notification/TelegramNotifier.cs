@@ -1,49 +1,56 @@
-﻿using Newtonsoft.Json;
+﻿using MeteringDevices.Service.RestSharp;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MeteringDevices.Service
+namespace MeteringDevices.Service.Notification
 {
-    class TelegramNotifier
+    class TelegramNotifier : INotifier
     {
         private static readonly Uri _BaseUrl = new Uri("https://api.telegram.org/");
 
-        private readonly RestClient _RestClient;
+        private readonly IRestClient _RestClient;
+        private readonly long _ChatId;
+        private readonly IRestSharpFactory _RestSharpFactory;
 
-        public TelegramNotifier(string token)
+        public TelegramNotifier(string token, long chatId, IRestSharpFactory restSharpFactory)
         {
             if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
             }
 
-            _RestClient = new RestClient();
+            if (restSharpFactory == null)
+            {
+                throw new ArgumentNullException(nameof(restSharpFactory));
+            }
+
+            _RestClient = restSharpFactory.CreateRestClient();
 
             UriBuilder uriBuilder = new UriBuilder(_BaseUrl);
             uriBuilder.Path = token;
 
-            _RestClient.BaseUrl = uriBuilder.Uri;   
+            _RestClient.BaseUrl = uriBuilder.Uri;
+            _ChatId = chatId;
+            _RestSharpFactory = restSharpFactory;
         }
 
-        public void SendMessage(long chatId, string message)
+        public void Notify(string message)
         {
-            IRestRequest request = new RestRequest("sendMessage", Method.POST);
+            IRestRequest request = _RestSharpFactory.CreateRestRequest("sendMessage", Method.POST);
+            
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddParameter("chat_id", chatId);
+            request.AddParameter("chat_id", _ChatId);
             request.AddParameter("text", message);
-
+            
             IRestResponse<TelegramStatus> response = _RestClient.Execute<TelegramStatus>(request);
-
+           
             if (response.ErrorException != null)
             {
                 throw response.ErrorException;
             }
 
-            if (!response.Data.Ok)
+            if (!response.Data.Success)
             {
                 throw new InvalidOperationException(
                     string.Format(
@@ -58,25 +65,22 @@ namespace MeteringDevices.Service
 
     class TelegramStatus
     {
-        public bool Ok
+        [JsonProperty("ok")]
+        public bool Success
         {
             get;
             set;
         }
 
+        [JsonProperty("error_code")]
         public int? ErrorCode
         {
             get;
             set;
         }
 
+        [JsonProperty("description")]
         public string Description
-        {
-            get;
-            set;
-        }
-
-        public object Result
         {
             get;
             set;
