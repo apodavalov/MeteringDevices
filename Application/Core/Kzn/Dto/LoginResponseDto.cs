@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class LoginResponse
+    class LoginResponseDto
     {
         [JsonProperty("session_token")]
         public string SessionToken { get; set; }

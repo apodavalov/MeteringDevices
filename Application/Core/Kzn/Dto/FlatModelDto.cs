@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class FlatModel
+    class FlatModelDto
     {
         [JsonProperty("accountNumber")]
         public string AccountNumber { get; set; }

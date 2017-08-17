@@ -14,10 +14,19 @@ namespace MeteringDevices.Core
 
         private const string _KznAccountNumberKey = "Kzn.AccountNumber";
         private const string _KznEnabledKey = "Kzn.Enabled";
+        private const string _KznMeteringDeviceDayIdKey = "Kzn.MeteringDevice.DayId";
+        private const string _KznMeteringDeviceNightIdKey = "Kzn.MeteringDevice.NightId";
+        private const string _KznMeteringDeviceColdIdKey = "Kzn.MeteringDevice.ColdId";
+        private const string _KznMeteringDeviceHotIdKey = "Kzn.MeteringDevice.HotId";
+
+        private const string _UsernameKey = "Spb.Service.Username";
+        private const string _PasswordKey = "Spb.Service.Password";
 
         private const string _SpbAccountNumberKey = "Spb.AccountNumber";
         private const string _SpbEnabledKey = "Spb.Enabled";
-
+        private const string _SpbMeteringDeviceDayIdKey = "Spb.MeteringDevice.DayId";
+        private const string _SpbMeteringDeviceNightIdKey = "Spb.MeteringDevice.NightId";
+        
         public override void Load()
         {
             Kernel.Bind<ISessionFactory>().To<SessionFactory>().InSingletonScope();
@@ -33,7 +42,12 @@ namespace MeteringDevices.Core
                 new DataProvider(
                     arg.Kernel.Get<ISessionFactory>(),
                     arg.Kernel.Get<INotifier>(),
-                    new Kzn.RetrieverService(),
+                    new Kzn.RetrieverService(
+                        ConfigUtils.GetStringFromConfig(_KznMeteringDeviceDayIdKey),
+                        ConfigUtils.GetStringFromConfig(_KznMeteringDeviceNightIdKey),
+                        ConfigUtils.GetStringFromConfig(_KznMeteringDeviceColdIdKey),
+                        ConfigUtils.GetStringFromConfig(_KznMeteringDeviceHotIdKey)
+                    ),
                     new Kzn.SendService(),
                     ConfigUtils.GetBoolFromConfig(_KznEnabledKey),
                     ConfigUtils.GetStringFromConfig(_KznAccountNumberKey)
@@ -41,7 +55,10 @@ namespace MeteringDevices.Core
                 new DataProvider(
                     arg.Kernel.Get<ISessionFactory>(),
                     arg.Kernel.Get<INotifier>(),
-                    new Spb.RetrieverService(),
+                    new Spb.RetrieverService(
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceDayIdKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceNightIdKey)
+                    ),
                     new Spb.SendService(),
                     ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
                     ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)

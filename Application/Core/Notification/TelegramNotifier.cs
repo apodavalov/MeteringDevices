@@ -39,7 +39,7 @@ namespace MeteringDevices.Core.Notification
         {
             IRestRequest request = _RestSharpFactory.CreateRestRequest("sendMessage", Method.POST);
             
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
             request.AddParameter("chat_id", _ChatId);
             request.AddParameter("text", message);
             

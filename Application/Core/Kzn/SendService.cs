@@ -67,7 +67,7 @@ namespace MeteringDevices.Core.Kzn
 
             PopulateLoginParams(userName, password, httpWebRequest);
 
-            LoginResponse message = null;
+            LoginResponseDto message = null;
 
             using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
             {
@@ -77,7 +77,7 @@ namespace MeteringDevices.Core.Kzn
 
                 using (Stream httpStream = httpResponse.GetResponseStream())
                 {
-                    message = Deserialize<LoginResponse>(httpStream, httpResponse.ContentEncoding);
+                    message = Deserialize<LoginResponseDto>(httpStream, httpResponse.ContentEncoding);
                 }
             }
 
@@ -106,12 +106,12 @@ namespace MeteringDevices.Core.Kzn
                 throw new ArgumentNullException(nameof(values));
             }
 
-            FlatModel flat = GetFlatInfo(accountNumber);
-            IList<DeviceInfo> devices = CollectDevicesInfo(values, flat);
+            FlatModelDto flat = GetFlatInfo(accountNumber);
+            IList<DeviceInfoDto> devices = CollectDevicesInfo(values, flat);
             PutValues(flat, devices);
         }
 
-        private void PutValues(FlatModel flat, IList<DeviceInfo> devices)
+        private void PutValues(FlatModelDto flat, IList<DeviceInfoDto> devices)
         {
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _SetCountersPath));
             PopulateHeaders(httpWebRequest, true);
@@ -129,7 +129,7 @@ namespace MeteringDevices.Core.Kzn
 
                     int i = 0;
 
-                    foreach (DeviceInfo deviceInfo in devices)
+                    foreach (DeviceInfoDto deviceInfo in devices)
                     {
                         writer.WriteParam(string.Format(CultureInfo.InvariantCulture, "data[inputCurrentValues][CounterInputCurrentValueType][{0}][valueID]", i), deviceInfo.ValueId);
                         writer.WriteParam(string.Format(CultureInfo.InvariantCulture, "data[inputCurrentValues][CounterInputCurrentValueType][{0}][entryValue]", i), deviceInfo.Value.ToString(CultureInfo.InvariantCulture));
@@ -139,7 +139,7 @@ namespace MeteringDevices.Core.Kzn
                 }
             }
 
-            SetValuesResponse setValuesResponse = null;
+            SetValuesResponseDto setValuesResponse = null;
 
             using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
             {
@@ -149,14 +149,14 @@ namespace MeteringDevices.Core.Kzn
 
                 using (Stream httpStream = httpResponse.GetResponseStream())
                 {
-                    setValuesResponse = Deserialize<SetValuesResponse>(httpStream, httpResponse.ContentEncoding);
+                    setValuesResponse = Deserialize<SetValuesResponseDto>(httpStream, httpResponse.ContentEncoding);
                 }
             }
 
             CheckResult(setValuesResponse.Result);
         }
 
-        private IList<DeviceInfo> CollectDevicesInfo(IDictionary<string, int> values, FlatModel flat)
+        private IList<DeviceInfoDto> CollectDevicesInfo(IDictionary<string, int> values, FlatModelDto flat)
         {
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _GetCountersPath));
             PopulateHeaders(httpWebRequest, true);
@@ -173,7 +173,7 @@ namespace MeteringDevices.Core.Kzn
                 }
             }
 
-            DeviceInfoResponse deviceInfoResponse = null;
+            DeviceInfoResponseDto deviceInfoResponse = null;
 
             using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
             {
@@ -183,7 +183,7 @@ namespace MeteringDevices.Core.Kzn
 
                 using (Stream httpStream = httpResponse.GetResponseStream())
                 {
-                    deviceInfoResponse = Deserialize<DeviceInfoResponse>(httpStream, httpResponse.ContentEncoding);
+                    deviceInfoResponse = Deserialize<DeviceInfoResponseDto>(httpStream, httpResponse.ContentEncoding);
                 }
             }
 
@@ -194,14 +194,14 @@ namespace MeteringDevices.Core.Kzn
                 throw new InvalidOperationException("Input is not allowed.");
             }
 
-            IDictionary<string, DeviceInfo> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId, StringComparer.Ordinal);
+            IDictionary<string, DeviceInfoDto> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId, StringComparer.Ordinal);
 
             if (dictionary.Count != values.Count)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,"The numbers of devices are different: {0} and {1}.", dictionary.Count, values.Count));
             }
 
-            foreach (KeyValuePair<string,DeviceInfo> pair in dictionary)
+            foreach (KeyValuePair<string,DeviceInfoDto> pair in dictionary)
             {
                 pair.Value.Value = values[pair.Key];
             }
@@ -209,7 +209,7 @@ namespace MeteringDevices.Core.Kzn
             return dictionary.Values.ToList();
         }
 
-        private void CheckResult(ResponseResult result)
+        private void CheckResult(ResponseResultDto result)
         {
             if (result.Code != 0)
             {
@@ -217,14 +217,14 @@ namespace MeteringDevices.Core.Kzn
             }
         }
 
-        private FlatModel GetFlatInfo(string accountNumber)
+        private FlatModelDto GetFlatInfo(string accountNumber)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>(StringComparer.Ordinal)  { { _SessionTokenValue, _SessionToken } };
 
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, string.Format(CultureInfo.InvariantCulture,_TsjPathTemplate, _UserId), dictionary));
             PopulateHeaders(httpWebRequest, false);
 
-            IList<FlatModel> message = null;
+            IList<FlatModelDto> message = null;
 
             using (HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
             {
@@ -234,7 +234,7 @@ namespace MeteringDevices.Core.Kzn
 
                 using (Stream httpStream = httpResponse.GetResponseStream())
                 {
-                    message = Deserialize<IList<FlatModel>>(httpStream, httpResponse.ContentEncoding);
+                    message = Deserialize<IList<FlatModelDto>>(httpStream, httpResponse.ContentEncoding);
                 }
             }
 

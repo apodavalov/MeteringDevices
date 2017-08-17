@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class DeviceInfo
+    class DeviceInfoDto
     {
         [JsonProperty("valueID")]
         public string ValueId { get; set; }

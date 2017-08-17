@@ -2,9 +2,9 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class SetValuesResponse
+    class SetValuesResponseDto
     {
         [JsonProperty("result")]
-        public ResponseResult Result { get; set; }
+        public ResponseResultDto Result { get; set; }
     }
 }

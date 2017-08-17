@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class DeviceSettings
+    class DeviceSettingsDto
     {
         [JsonProperty("inputAllowed")]
         public bool InputAllowed { get; set; }

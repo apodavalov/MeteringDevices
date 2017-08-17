@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class DeviceCounters
+    class DeviceCountersDto
     {        
         [JsonProperty("CounterCurrentValueType")]
-        public IList<DeviceInfo> Devices { get; set; }
+        public IList<DeviceInfoDto> Devices { get; set; }
     }
 }

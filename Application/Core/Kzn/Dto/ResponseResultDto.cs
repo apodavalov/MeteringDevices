@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Kzn.Dto
 {
-    class ResponseResult
+    class ResponseResultDto
     {
         [JsonProperty("code")]
         public int Code { get; set; }
