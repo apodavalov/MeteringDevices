@@ -4,6 +4,8 @@ using MeteringDevices.Core.Notification;
 using Ninject.Activation;
 using Ninject;
 using MeteringDevices.Core.Common;
+using MeteringDevices.Core.Spb;
+using MeteringDevices.Data;
 
 namespace MeteringDevices.Core
 {
@@ -19,8 +21,9 @@ namespace MeteringDevices.Core
         private const string _KznMeteringDeviceColdIdKey = "Kzn.MeteringDevice.ColdId";
         private const string _KznMeteringDeviceHotIdKey = "Kzn.MeteringDevice.HotId";
 
-        private const string _UsernameKey = "Spb.Service.Username";
-        private const string _PasswordKey = "Spb.Service.Password";
+        private const string _SpbUsernameKey = "Spb.Service.Username";
+        private const string _SpbPasswordKey = "Spb.Service.Password";
+        private const string _SpbBaseUrlKey = "Spb.Service.BaseUrl";
 
         private const string _SpbAccountNumberKey = "Spb.AccountNumber";
         private const string _SpbEnabledKey = "Spb.Enabled";
@@ -29,11 +32,17 @@ namespace MeteringDevices.Core
         
         public override void Load()
         {
-            Kernel.Bind<ISessionFactory>().To<SessionFactory>().InSingletonScope();
+            Kernel.Bind<Spb.IAccountsApiService>().ToMethod(CreateSpbAccountsApiService).InSingletonScope();
             Kernel.Bind<IJsonSerializerFactory>().To<JsonSerializerFactory>().InSingletonScope();
             Kernel.Bind<IRestSharpFactory>().To<RestSharpFactory>().InSingletonScope();
+            Kernel.Bind<ISendApiServiceFactory>().To<SendApiServiceFactory>();
             Kernel.Bind<INotifier>().ToMethod(CreateNotifier).InSingletonScope();
             Kernel.Bind<IApp>().ToMethod(CreateApp).InSingletonScope();
+        }
+
+        private IAccountsApiService CreateSpbAccountsApiService(IContext arg)
+        {
+            return new Spb.AccountsApiService(arg.Kernel.Get<IRestSharpFactory>(), ConfigUtils.GetStringFromConfig(_SpbBaseUrlKey));
         }
 
         private IApp CreateApp(IContext arg)
@@ -59,7 +68,12 @@ namespace MeteringDevices.Core
                         ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceDayIdKey),
                         ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceNightIdKey)
                     ),
-                    new Spb.SendService(),
+                    new Spb.SendService(
+                        arg.Kernel.Get<ISendApiServiceFactory>(),
+                        arg.Kernel.Get<IAccountsApiService>(),
+                        ConfigUtils.GetStringFromConfig(_SpbUsernameKey),
+                        ConfigUtils.GetStringFromConfig(_SpbPasswordKey)
+                    ),
                     ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
                     ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)
                )

@@ -77,7 +77,7 @@ namespace MeteringDevices.Core
 
         private IDictionary<string, int> Retrieve()
         {
-            using (ISession session = _SessionFactory.GetSession())
+            using (ISession session = _SessionFactory.OpenSession())
             {
                 return _RetrieveService.GetCurrentValues(session);
             }

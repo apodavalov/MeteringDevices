@@ -8,14 +8,14 @@ namespace MeteringDevices.Data
     {
         private const string _ConnectionStringName = "Main";
 
-        private ISession CreateSession(IContext context)
+        private ISessionFactory CreateSessionFactory(IContext context)
         {
-            return new Session(ConfigurationManager.ConnectionStrings[_ConnectionStringName].ConnectionString);
+            return new SessionFactory(ConfigurationManager.ConnectionStrings[_ConnectionStringName].ConnectionString);
         }
 
         public override void Load()
         {
-            Kernel.Bind<ISession>().ToMethod(CreateSession);
+            Kernel.Bind<ISessionFactory>().ToMethod(CreateSessionFactory);
         }
     }
 }

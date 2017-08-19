@@ -65,7 +65,6 @@
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IRetrieveService.cs" />
     <Compile Include="ISendService.cs" />
-    <Compile Include="ISessionFactory.cs" />
     <Compile Include="Kzn\Dto\DeviceCountersDto.cs" />
     <Compile Include="Kzn\Dto\DeviceInfoDto.cs" />
     <Compile Include="Kzn\Dto\DeviceInfoResponseDto.cs" />
@@ -87,8 +86,25 @@
     <Compile Include="RestSharp\NewtonsoftJsonDeserializer.cs" />
     <Compile Include="RestSharp\NewtonsoftJsonSerializer.cs" />
     <Compile Include="RestSharp\RestSharpFactory.cs" />
-    <Compile Include="SessionFactory.cs" />
+    <Compile Include="Spb\Dto\AreaDto.cs" />
+    <Compile Include="Spb\Dto\ExtraDto.cs" />
+    <Compile Include="Spb\Dto\ProviderDto.cs" />
+    <Compile Include="Spb\Dto\TenantDto.cs" />
+    <Compile Include="Spb\Dto\AccountsDataDto.cs" />
+    <Compile Include="Spb\Dto\LoginDataDto.cs" />
+    <Compile Include="Spb\Dto\LoginRequestDto.cs" />
+    <Compile Include="Spb\Dto\MessageDto.cs" />
+    <Compile Include="Spb\Dto\ResponseDto.cs" />
+    <Compile Include="Spb\Dto\SetValuesDto.cs" />
+    <Compile Include="Spb\IAccountsApiService.cs" />
+    <Compile Include="Spb\RestResponseExtesions.cs" />
+    <Compile Include="Spb\ISendApiService.cs" />
+    <Compile Include="Spb\ISendApiServiceFactory.cs" />
+    <Compile Include="Spb\SecurityToken.cs" />
     <Compile Include="Spb\RetrieverService.cs" />
+    <Compile Include="Spb\AccountsApiService.cs" />
+    <Compile Include="Spb\SendApiService.cs" />
+    <Compile Include="Spb\SendApiServiceFactory.cs" />
     <Compile Include="Spb\SendService.cs" />
   </ItemGroup>
   <ItemGroup>
