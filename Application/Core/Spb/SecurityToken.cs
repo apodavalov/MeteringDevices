@@ -1,5 +1,4 @@
-﻿using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +6,7 @@ namespace MeteringDevices.Core.Spb
 {
     class SecurityToken
     {
-        public SecurityToken(string token, IEnumerable<RestResponseCookie> cookies)
+        public SecurityToken(string token, IEnumerable<Cookie> cookies)
         {
             if (token == null)
             {
@@ -29,7 +28,7 @@ namespace MeteringDevices.Core.Spb
             private set;
         }
         
-        public IReadOnlyList<RestResponseCookie> Cookies
+        public IReadOnlyList<Cookie> Cookies
         {
             get;
             private set;

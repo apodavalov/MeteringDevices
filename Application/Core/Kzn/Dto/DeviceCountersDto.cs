@@ -6,6 +6,6 @@ namespace MeteringDevices.Core.Kzn.Dto
     class DeviceCountersDto
     {        
         [JsonProperty("CounterCurrentValueType")]
-        public IList<DeviceInfoDto> Devices { get; set; }
+        public IReadOnlyList<DeviceInfoDto> Devices { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace MeteringDevices.Core
 {
     interface ISendService
     {
-        void PutValues(string accountNumber, IDictionary<string, int> values);
+        void PutValues(string accountNumber, IReadOnlyDictionary<string, int> values);
     }
 }

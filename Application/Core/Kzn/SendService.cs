@@ -85,7 +85,7 @@ namespace MeteringDevices.Core.Kzn
             _UserId = message.UserId;
         }
 
-        public void PutValues(string accountNumber, IDictionary<string, int> values)
+        public void PutValues(string accountNumber, IReadOnlyDictionary<string, int> values)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace MeteringDevices.Core.Kzn
             }
         }
 
-        private void PutValuesInternal(string accountNumber, IDictionary<string, int> values)
+        private void PutValuesInternal(string accountNumber, IReadOnlyDictionary<string, int> values)
         {
             if (values == null)
             {
@@ -156,7 +156,7 @@ namespace MeteringDevices.Core.Kzn
             CheckResult(setValuesResponse.Result);
         }
 
-        private IList<DeviceInfoDto> CollectDevicesInfo(IDictionary<string, int> values, FlatModelDto flat)
+        private IList<DeviceInfoDto> CollectDevicesInfo(IReadOnlyDictionary<string, int> values, FlatModelDto flat)
         {
             HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(BuildUri(_Secured, _Host, _GetCountersPath));
             PopulateHeaders(httpWebRequest, true);

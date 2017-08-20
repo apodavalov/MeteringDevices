@@ -41,7 +41,7 @@ namespace MeteringDevices.Core.Spb
             _Password = password; 
         }
 
-        public void PutValues(string accountNumber, IDictionary<string, int> values)
+        public void PutValues(string accountNumber, IReadOnlyDictionary<string, int> values)
         {
             if (accountNumber == null)
             {
@@ -75,7 +75,7 @@ namespace MeteringDevices.Core.Spb
             }
         }
 
-        private IDictionary<string, IReadOnlyList<int>> ConvertedValues(IDictionary<string, int> values)
+        private IDictionary<string, IReadOnlyList<int>> ConvertedValues(IReadOnlyDictionary<string, int> values)
         {
             IDictionary<string, List<Tuple<string,int>>> dictionary = new Dictionary<string, List<Tuple<string, int>>>();
 

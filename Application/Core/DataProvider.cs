@@ -2,6 +2,7 @@
 using MeteringDevices.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace MeteringDevices.Core
 {
@@ -66,7 +67,7 @@ namespace MeteringDevices.Core
                     return;
                 }
 
-                _SendService.PutValues(_AccountNumber, values);
+                _SendService.PutValues(_AccountNumber, new ReadOnlyDictionary<string, int>(values));
             }
             catch (Exception ex)
             {

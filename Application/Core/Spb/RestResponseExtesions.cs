@@ -22,7 +22,7 @@ namespace MeteringDevices.Core.Spb
 
             if (restResponse.Data == null)
             {
-                throw new InvalidOperationException("No data read.");
+                throw new InvalidOperationException("No data was read.");
             }
 
             if (restResponse.Data.Status != 200)
@@ -32,7 +32,7 @@ namespace MeteringDevices.Core.Spb
                     );
             }
 
-            IReadOnlyList<MessageDto> messageDtoList = restResponse.Data?.Messages;
+            IReadOnlyList<MessageDto> messageDtoList = restResponse.Data.Messages;
 
             if (messageDtoList == null || messageDtoList.Count == 0)
             {
