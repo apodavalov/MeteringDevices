@@ -56,7 +56,7 @@ namespace MeteringDevices.Core.Spb
                 throw new InvalidOperationException("Expected to receive a token.");
             }
 
-            return new SecurityToken(token, restResponse.Cookies.Select(cookie => new Cookie(cookie.Name, cookie.Value)));
+            return new SecurityToken(token, restResponse.Cookies.Select(cookie => new SimpleCookie(cookie.Name, cookie.Value)));
         }
         
         public AccountsDataDto GetAccounts(SecurityToken securityToken, string accountNumber)

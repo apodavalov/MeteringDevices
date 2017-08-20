@@ -6,7 +6,7 @@ namespace MeteringDevices.Core.Spb
 {
     class SecurityToken
     {
-        public SecurityToken(string token, IEnumerable<Cookie> cookies)
+        public SecurityToken(string token, IEnumerable<SimpleCookie> cookies)
         {
             if (token == null)
             {
@@ -28,7 +28,7 @@ namespace MeteringDevices.Core.Spb
             private set;
         }
         
-        public IReadOnlyList<Cookie> Cookies
+        public IReadOnlyList<SimpleCookie> Cookies
         {
             get;
             private set;

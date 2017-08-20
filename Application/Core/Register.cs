@@ -15,6 +15,10 @@ namespace MeteringDevices.Core
         private const string _NotifierTelegramToken = "Notifier.Telegram.Token";
         private const string _NotifierTelegramChatId = "Notifier.Telegram.ChatId";
 
+        private const string _KznUsernameKey = "Kzn.Service.Username";
+        private const string _KznPasswordKey = "Kzn.Service.Password";
+        private const string _KznBaseUrlKey = "Kzn.Service.BaseUrl";
+
         private const string _KznAccountNumberKey = "Kzn.AccountNumber";
         private const string _KznEnabledKey = "Kzn.Enabled";
         private const string _KznMeteringDeviceDayIdKey = "Kzn.MeteringDevice.DayId";
@@ -33,12 +37,18 @@ namespace MeteringDevices.Core
         
         public override void Load()
         {
+            Kernel.Bind<Kzn.ISendApiService>().ToMethod(CreateKznSendApiService).InSingletonScope();
             Kernel.Bind<Spb.IAccountsApiService>().ToMethod(CreateSpbAccountsApiService).InSingletonScope();
             Kernel.Bind<IJsonSerializerFactory>().To<JsonSerializerFactory>().InSingletonScope();
             Kernel.Bind<IRestSharpFactory>().To<RestSharpFactory>().InSingletonScope();
             Kernel.Bind<ISendApiServiceFactory>().To<SendApiServiceFactory>();
             Kernel.Bind<INotifier>().ToMethod(CreateNotifier).InSingletonScope();
             Kernel.Bind<IApp>().ToMethod(CreateApp).InSingletonScope();
+        }
+
+        private Kzn.ISendApiService CreateKznSendApiService(IContext arg)
+        {
+            return new Kzn.SendApiService(arg.Kernel.Get<IRestSharpFactory>(), ConfigUtils.GetStringFromConfig(_KznBaseUrlKey));
         }
 
         private IAccountsApiService CreateSpbAccountsApiService(IContext arg)
@@ -58,7 +68,11 @@ namespace MeteringDevices.Core
                         ConfigUtils.GetStringFromConfig(_KznMeteringDeviceColdIdKey),
                         ConfigUtils.GetStringFromConfig(_KznMeteringDeviceHotIdKey)
                     ),
-                    new Kzn.SendService(),
+                    new Kzn.SendService(
+                        arg.Kernel.Get<Kzn.ISendApiService>(),
+                        ConfigUtils.GetStringFromConfig(_KznUsernameKey),
+                        ConfigUtils.GetStringFromConfig(_KznPasswordKey)
+                    ),
                     ConfigUtils.GetBoolFromConfig(_KznEnabledKey),
                     ConfigUtils.GetStringFromConfig(_KznAccountNumberKey)
                 ),

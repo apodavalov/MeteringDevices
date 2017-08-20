@@ -72,10 +72,12 @@
     <Compile Include="Kzn\Dto\FlatModelDto.cs" />
     <Compile Include="Kzn\Dto\LoginResponseDto.cs" />
     <Compile Include="Kzn\Dto\ResponseResultDto.cs" />
+    <Compile Include="Kzn\ISendApiService.cs" />
     <Compile Include="Kzn\RetrieverService.cs" />
+    <Compile Include="Kzn\SecurityToken.cs" />
+    <Compile Include="Kzn\SendApiService.cs" />
     <Compile Include="Kzn\SendService.cs" />
     <Compile Include="Kzn\Dto\SetValuesResponseDto.cs" />
-    <Compile Include="Common\UrlFormEncodedWriter.cs" />
     <Compile Include="Notification\INotifier.cs" />
     <Compile Include="Notification\TelegramNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="RestSharp\NewtonsoftJsonDeserializer.cs" />
     <Compile Include="RestSharp\NewtonsoftJsonSerializer.cs" />
     <Compile Include="RestSharp\RestSharpFactory.cs" />
-    <Compile Include="Spb\Cookie.cs" />
+    <Compile Include="Spb\SimpleCookie.cs" />
     <Compile Include="Spb\Dto\AreaDto.cs" />
     <Compile Include="Spb\Dto\ExtraDto.cs" />
     <Compile Include="Spb\Dto\ProviderDto.cs" />

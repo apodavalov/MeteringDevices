@@ -1,6 +1,6 @@
 ﻿namespace MeteringDevices.Core.Spb
 {
-    class Cookie
+    class SimpleCookie
     {
         public string Name
         {
@@ -14,7 +14,7 @@
             private set;
         }
 
-        public Cookie(string name, string value)
+        public SimpleCookie(string name, string value)
         {
             Name = name;
             Value = value;
