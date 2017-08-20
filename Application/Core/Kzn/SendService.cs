@@ -86,6 +86,11 @@ namespace MeteringDevices.Core.Kzn
         
         private void CheckResult(ResponseResultDto result)
         {
+            if (result == null)
+            {
+                throw new InvalidOperationException("No result was received.");
+            }
+
             if (result.Code != 0)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Result code: {0}, Message: {1}, Details: {2}.", result.Code, result.Message, result.Details));

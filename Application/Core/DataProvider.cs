@@ -3,6 +3,7 @@ using MeteringDevices.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace MeteringDevices.Core
 {
@@ -68,12 +69,31 @@ namespace MeteringDevices.Core
                 }
 
                 _SendService.PutValues(_AccountNumber, new ReadOnlyDictionary<string, int>(values));
+                _Notifier.Notify(BuildMessage(values));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }
+        }
+
+        private string BuildMessage(IDictionary<string, int> values)
+        {
+            StringBuilder messageBuilder = new StringBuilder();
+
+            messageBuilder.AppendFormat("Submitted metering devices values for account '{0}'.", _AccountNumber);
+
+            if (values.Count > 0)
+            {
+                messageBuilder.Append("\nThe following values have been sent: ");
+                foreach (KeyValuePair<string, int> keyValue in values)
+                {
+                    messageBuilder.AppendFormat("\n\t{0}: {1}", keyValue.Key, keyValue.Value);
+                }
+            }
+
+            return messageBuilder.ToString();
         }
 
         private IDictionary<string, int> Retrieve()
