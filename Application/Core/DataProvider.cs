@@ -1,5 +1,5 @@
-﻿using MeteringDevices.Data;
-using MeteringDevices.Core.Notification;
+﻿using MeteringDevices.Core.Notification;
+using MeteringDevices.Data;
 using System;
 using System.Collections.Generic;
 

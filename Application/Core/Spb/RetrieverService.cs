@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MeteringDevices.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MeteringDevices.Data;
 
 namespace MeteringDevices.Core.Spb
 {
@@ -28,6 +28,11 @@ namespace MeteringDevices.Core.Spb
 
         public IDictionary<string, int> GetCurrentValues(ISession session)
         {
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
+
             Data.Spb.CurrentMeteringValue currentValues = currentValues = session.SpbCurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
 
             if (currentValues == null)

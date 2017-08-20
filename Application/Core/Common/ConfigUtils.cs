@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace MeteringDevices.Core.Common
 {
@@ -6,6 +7,11 @@ namespace MeteringDevices.Core.Common
     {
         public static string GetStringFromConfig(string key, string defaultValue = null)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
             return ConfigurationManager.AppSettings[key] ?? defaultValue;
         }
 

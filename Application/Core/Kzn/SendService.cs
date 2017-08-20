@@ -19,7 +19,7 @@ namespace MeteringDevices.Core.Kzn
 
         private const string _UsernameKey = "Kzn.Service.Username";
         private const string _PasswordKey = "Kzn.Service.Password";
-        private const string _HostnameKey = "Kzn.Service.Hostname";
+        private const string _HostnameKey = "Kzn.Service.BaseUrl";
         private const string _LoginPath = "api/users/sessions.json";
         private const string _TsjPathTemplate = "/api/v1/users/{0}/informers/tsj.json";
         private const string _GetCountersPath = "/api/v1/services/hcs/tsj/counters/get.json";

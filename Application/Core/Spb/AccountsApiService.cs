@@ -2,8 +2,6 @@
 using MeteringDevices.Core.Spb.Dto;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MeteringDevices.Core.Spb
 {
@@ -31,6 +29,16 @@ namespace MeteringDevices.Core.Spb
 
         public SecurityToken Login(string username, string password)
         {
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
             IRestRequest restRequest = _RestSharpFactory.CreateRestRequest("api/v2/auth/login", Method.POST);
 
             restRequest.AddHeader("Content-Type", "application/json");
@@ -49,11 +57,19 @@ namespace MeteringDevices.Core.Spb
 
             return new SecurityToken(token, restResponse.Cookies);
         }
-
-     
-
+        
         public AccountsDataDto GetAccounts(SecurityToken securityToken, string accountNumber)
         {
+            if (securityToken == null)
+            {
+                throw new ArgumentNullException(nameof(securityToken));
+            }
+
+            if (accountNumber == null)
+            {
+                throw new ArgumentNullException(nameof(accountNumber));
+            }
+
             IRestRequest restRequest = _RestSharpFactory.CreateRestRequest("api/v2/auth/accounts", Method.GET);
             restRequest.AddQueryParameter("_token", securityToken.Token);
 

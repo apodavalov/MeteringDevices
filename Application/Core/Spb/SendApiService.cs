@@ -31,6 +31,21 @@ namespace MeteringDevices.Core.Spb
 
         public void SetValues(string token, string meteringDeviceId, IReadOnlyList<int> values)
         {
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
+            if (meteringDeviceId == null)
+            {
+                throw new ArgumentNullException(nameof(meteringDeviceId));
+            }
+
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             IRestRequest restRequest = _RestSharpFactory.CreateRestRequest(
                 string.Format(CultureInfo.InvariantCulture, "api/v2/meters/green_table_readings/{0}/set_values", meteringDeviceId), 
                 Method.POST

@@ -7,14 +7,17 @@ namespace MeteringDevices.Core.Notification
 {
     class TelegramNotifier : INotifier
     {
-        private static readonly Uri _BaseUrl = new Uri("https://api.telegram.org/");
-
         private readonly IRestClient _RestClient;
         private readonly long _ChatId;
         private readonly IRestSharpFactory _RestSharpFactory;
 
-        public TelegramNotifier(string token, long chatId, IRestSharpFactory restSharpFactory)
+        public TelegramNotifier(string baseUrl, string token, long chatId, IRestSharpFactory restSharpFactory)
         {
+            if (baseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(baseUrl));
+            }
+
             if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
@@ -27,7 +30,7 @@ namespace MeteringDevices.Core.Notification
 
             _RestClient = restSharpFactory.CreateRestClient();
 
-            UriBuilder uriBuilder = new UriBuilder(_BaseUrl);
+            UriBuilder uriBuilder = new UriBuilder(baseUrl);
             uriBuilder.Path = token;
 
             _RestClient.BaseUrl = uriBuilder.Uri;
@@ -37,6 +40,11 @@ namespace MeteringDevices.Core.Notification
 
         public void Notify(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             IRestRequest request = _RestSharpFactory.CreateRestRequest("sendMessage", Method.POST);
             
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");

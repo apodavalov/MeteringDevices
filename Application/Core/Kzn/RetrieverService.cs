@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MeteringDevices.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MeteringDevices.Data;
 
 namespace MeteringDevices.Core.Kzn
 {

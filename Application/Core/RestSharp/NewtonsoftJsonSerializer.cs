@@ -43,12 +43,6 @@ namespace MeteringDevices.Core.RestSharp
             };
         }
 
-        public NewtonsoftJsonSerializer(Newtonsoft.Json.JsonSerializer serializer)
-        {
-            ContentType = "application/json";
-            _Serializer = serializer;
-        }
-
         public string Serialize(object obj)
         {
             using (StringWriter stringWriter = new StringWriter())

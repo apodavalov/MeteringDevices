@@ -1,18 +1,19 @@
-﻿using Ninject.Modules;
-using MeteringDevices.Core.RestSharp;
+﻿using MeteringDevices.Core.Common;
 using MeteringDevices.Core.Notification;
-using Ninject.Activation;
-using Ninject;
-using MeteringDevices.Core.Common;
+using MeteringDevices.Core.RestSharp;
 using MeteringDevices.Core.Spb;
 using MeteringDevices.Data;
+using Ninject;
+using Ninject.Activation;
+using Ninject.Modules;
 
 namespace MeteringDevices.Core
 {
     public class Register : NinjectModule
     {
-        private const string _TelegramNotifierToken = "Telegram.Notifier.Token";
-        private const string _TelegramNotifierChatId = "Telegram.Notifier.ChatId";
+        private const string _NotifierTelegramBaseUrl = "Notifier.Telegram.BaseUrl";
+        private const string _NotifierTelegramToken = "Notifier.Telegram.Token";
+        private const string _NotifierTelegramChatId = "Notifier.Telegram.ChatId";
 
         private const string _KznAccountNumberKey = "Kzn.AccountNumber";
         private const string _KznEnabledKey = "Kzn.Enabled";
@@ -83,8 +84,9 @@ namespace MeteringDevices.Core
         private INotifier CreateNotifier(IContext arg)
         {
             return new TelegramNotifier(
-                ConfigUtils.GetStringFromConfig(_TelegramNotifierToken), 
-                ConfigUtils.GetLongFromConfig(_TelegramNotifierChatId),
+                ConfigUtils.GetStringFromConfig(_NotifierTelegramBaseUrl),
+                ConfigUtils.GetStringFromConfig(_NotifierTelegramToken), 
+                ConfigUtils.GetLongFromConfig(_NotifierTelegramChatId),
                 Kernel.Get<IRestSharpFactory>()
             );
         }

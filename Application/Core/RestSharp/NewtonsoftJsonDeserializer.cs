@@ -1,7 +1,8 @@
-﻿using RestSharp.Deserializers;
+﻿using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Deserializers;
+using System;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace MeteringDevices.Core.RestSharp
 {
@@ -32,13 +33,13 @@ namespace MeteringDevices.Core.RestSharp
             _Serializer = new Newtonsoft.Json.JsonSerializer();
         }
 
-        public NewtonsoftJsonDeserializer(Newtonsoft.Json.JsonSerializer serializer)
-        {
-            _Serializer = serializer;
-        }
-
         public T Deserialize<T>(IRestResponse response)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
             using (StringReader stringReader = new StringReader(response.Content))
             {
                 using (JsonTextReader jsonTextReader = new JsonTextReader(stringReader))

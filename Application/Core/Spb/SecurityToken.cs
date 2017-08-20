@@ -7,12 +7,16 @@ namespace MeteringDevices.Core.Spb
 {
     class SecurityToken
     {
-
         public SecurityToken(string token, IEnumerable<RestResponseCookie> cookies)
         {
             if (token == null)
             {
                 throw new ArgumentNullException(nameof(token));
+            }
+
+            if (cookies == null)
+            {
+                throw new ArgumentNullException(nameof(cookies));
             }
 
             Token = token;

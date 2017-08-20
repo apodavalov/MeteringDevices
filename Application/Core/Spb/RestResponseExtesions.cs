@@ -10,6 +10,11 @@ namespace MeteringDevices.Core.Spb
     {
         public static void CheckSuccess<T>(this IRestResponse<ResponseDto<T>> restResponse) where T : class
         {
+            if (restResponse == null)
+            {
+                throw new ArgumentNullException(nameof(restResponse));
+            }
+
             if (restResponse.ErrorException != null)
             {
                 throw restResponse.ErrorException;
