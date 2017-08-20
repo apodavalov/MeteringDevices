@@ -13,6 +13,7 @@ namespace MeteringDevices.UI.Spb
     public partial class MainForm : Form
     {
         private const double _WeekLength = 7.0;
+        private ISessionFactory _SessionFactory;
 
         public MainForm()
         {
@@ -23,7 +24,7 @@ namespace MeteringDevices.UI.Spb
         {
             try
             {
-                using (ISession session = Program.Kernel.Get<ISession>())
+                using (ISession session = _SessionFactory.OpenSession())
                 {
                     using (session.Transaction = session.BeginTransaction(IsolationLevel.Snapshot))
                     {
@@ -115,9 +116,11 @@ namespace MeteringDevices.UI.Spb
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            _SessionFactory = Program.Kernel.Get<ISessionFactory>();
+
             try
             {
-                using (ISession session = Program.Kernel.Get<ISession>())
+                using (ISession session = _SessionFactory.OpenSession())
                 {
                     if (!CheckEnable(session, true))
                     {
