@@ -88,9 +88,11 @@
     <Compile Include="RestSharp\NewtonsoftJsonDeserializer.cs" />
     <Compile Include="RestSharp\NewtonsoftJsonSerializer.cs" />
     <Compile Include="RestSharp\RestSharpFactory.cs" />
+    <Compile Include="Spb\Dto\MeteringDeviceInfoDto.cs" />
+    <Compile Include="Spb\Dto\MeteringDeviceInfoExtraDto.cs" />
     <Compile Include="Spb\SimpleCookie.cs" />
     <Compile Include="Spb\Dto\AreaDto.cs" />
-    <Compile Include="Spb\Dto\ExtraDto.cs" />
+    <Compile Include="Spb\Dto\TenantExtraDto.cs" />
     <Compile Include="Spb\Dto\ProviderDto.cs" />
     <Compile Include="Spb\Dto\TenantDto.cs" />
     <Compile Include="Spb\Dto\AccountsDataDto.cs" />

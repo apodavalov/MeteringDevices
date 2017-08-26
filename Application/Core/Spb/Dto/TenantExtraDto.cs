@@ -2,7 +2,7 @@
 
 namespace MeteringDevices.Core.Spb.Dto
 {
-    class ExtraDto
+    class TenantExtraDto
     {
         [JsonProperty("provider")]
         public ProviderDto Provider

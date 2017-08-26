@@ -55,19 +55,34 @@ namespace MeteringDevices.Core.Spb
 
             SecurityToken securityToken = _SendApiService.Login(_Username, _Password);
             AccountsDataDto data = _SendApiService.GetAccounts(securityToken, accountNumber);
+            TenantDto tenant = GetTenant(data, accountNumber);
 
-            string url = GetUrl(data, accountNumber);
+            if (tenant == null)
+            {
+                throw new InvalidOperationException(string.Format("Unable to find account id by account number {0}", accountNumber));
+            }
+
+            string url = tenant.Extra?.Provider?.Url;
 
             if (url == null)
             {
                 throw new InvalidOperationException("Url is null.");
             }
 
+            string accountId = tenant.Area?.Id;
+
+            if (accountId == null)
+            {
+                throw new InvalidOperationException("AreaId is null.");
+            }
+
             Uri baseUri = new UriBuilder("https", url).Uri;
 
             ISendApiService sendApiService = _SendApiServiceFactory.GetService(baseUri);
 
-            IDictionary<string, IReadOnlyList<int>> convertedValues = ConvertedValues(values);
+            IList<MeteringDeviceInfoDto> devicesInfo = sendApiService.GetDevicesInfo(securityToken.Token, accountId);
+
+            IDictionary<string, IReadOnlyList<int>> convertedValues = ConvertValues(values, devicesInfo);
 
             foreach (KeyValuePair<string, IReadOnlyList<int>> value in convertedValues)
             {
@@ -75,14 +90,44 @@ namespace MeteringDevices.Core.Spb
             }
         }
 
-        private IDictionary<string, IReadOnlyList<int>> ConvertedValues(IReadOnlyDictionary<string, int> values)
+        private TenantDto GetTenant(AccountsDataDto data, string accountNumber)
         {
+            if (data?.Tenants == null)
+            {
+                return null;
+            }
+
+            foreach (TenantDto tenantDto in data.Tenants)
+            {
+                if (string.Equals(tenantDto?.AccountNumber, accountNumber, StringComparison.Ordinal))
+                {
+                    return tenantDto;
+                }
+            }
+
+            return null;
+        }
+
+        private IDictionary<string, IReadOnlyList<int>> ConvertValues(IReadOnlyDictionary<string, int> values, IList<MeteringDeviceInfoDto> devicesInfo)
+        {
+            IDictionary<string, string> serialNumberIdMap = devicesInfo.Where(deviceInfo => deviceInfo?.Extra?.Id != null && deviceInfo.Extra?.SerialNumber != null)
+                .ToDictionary(deviceInfo => deviceInfo.Extra.SerialNumber, deviceInfo => deviceInfo.Extra.Id);
+
             IDictionary<string, List<Tuple<string,int>>> dictionary = new Dictionary<string, List<Tuple<string, int>>>();
 
             foreach (KeyValuePair<string, int> keyValue in values)
             {
                 string[] tokens = keyValue.Key.Split(new char[] { '_' }, 2, StringSplitOptions.None);
-                string meteringDeviceId = tokens[0];
+                string meteringDeviceSerialNumber = tokens[0];
+
+                string meteringDeviceId;
+                
+                if (!serialNumberIdMap.TryGetValue(meteringDeviceSerialNumber, out meteringDeviceId))
+                {
+                    throw new InvalidOperationException(
+                        string.Format("Unable to find metering device id by the following serial number {0}", meteringDeviceSerialNumber)
+                    );
+                }
 
                 List<Tuple<string, int>> meteringDeviceValues;  
 
@@ -107,24 +152,6 @@ namespace MeteringDevices.Core.Spb
             }
 
             return result;
-        }
-
-        private string GetUrl(AccountsDataDto data, string accountNumber)
-        {
-            if (data?.Tenants == null)
-            {
-                return null;
-            }
-
-            foreach (TenantDto tenantDto in data.Tenants)
-            {
-                if (string.Equals(tenantDto?.Area?.Id, accountNumber, StringComparison.Ordinal))
-                {
-                    return tenantDto?.Extra?.Provider?.Url;
-                }
-            }
-
-            return null;
         }
     }
 }

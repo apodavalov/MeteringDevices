@@ -61,5 +61,34 @@ namespace MeteringDevices.Core.Spb
 
             restResponse.CheckSuccess();
         }
+
+        public IList<MeteringDeviceInfoDto> GetDevicesInfo(string token, string accountId)
+        {
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+
+            IRestRequest restRequest = _RestSharpFactory.CreateRestRequest(
+               string.Format(CultureInfo.InvariantCulture, "api/v2/meters/green_table_areas_lk/{0}", accountId),
+               Method.GET
+           );
+
+            restRequest.AddQueryParameter("_token", token);
+            restRequest.AddQueryParameter("limit", "none");
+            restRequest.AddQueryParameter("period", "2017-07-01T00:00:00");
+
+            IRestResponse<ResponseDto<IList<MeteringDeviceInfoDto>>> restResponse = 
+                _RestClient.Execute<ResponseDto<IList<MeteringDeviceInfoDto>>>(restRequest);
+
+            restResponse.CheckSuccess();
+
+            return restResponse.Data.Data;
+        }
     }
 }
