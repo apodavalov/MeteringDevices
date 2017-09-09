@@ -59,12 +59,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AppTest.cs" />
+    <Compile Include="DataProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{e11bb179-ce01-4614-bdbf-7da3ba57df6f}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{30eb6f25-195f-4d27-9980-19563dd7b33d}</Project>
+      <Name>Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

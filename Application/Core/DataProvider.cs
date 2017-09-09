@@ -86,7 +86,7 @@ namespace MeteringDevices.Core
 
             if (values.Count > 0)
             {
-                messageBuilder.Append("\nThe following values have been sent: ");
+                messageBuilder.Append("\nThe following values have been sent:");
                 foreach (KeyValuePair<string, int> keyValue in values)
                 {
                     messageBuilder.AppendFormat("\n\t{0}: {1}", keyValue.Key, keyValue.Value);
