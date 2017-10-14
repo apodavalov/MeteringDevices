@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Common\ConfigUtils.cs" />
+    <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="IApp.cs" />
     <Compile Include="IDataProvider.cs" />

@@ -15,24 +15,14 @@ namespace MeteringDevices.Core.Test
         private Mock<IRetrieveService> _RetrieveServiceMock;
         private Mock<ISendService> _SendServiceMock;
 
-        [OneTimeSetUp]
-        public void OneTimeSetup()
+        [SetUp]
+        public void SetUp()
         {
             _SessionFactoryMock = new Mock<ISessionFactory>();
             _SessionMock = new Mock<ISession>();
             _NotifierMock = new Mock<INotifier>();
             _RetrieveServiceMock = new Mock<IRetrieveService>();
             _SendServiceMock = new Mock<ISendService>();
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            _SessionFactoryMock.Reset();
-            _SessionMock.Reset();
-            _NotifierMock.Reset();
-            _RetrieveServiceMock.Reset();
-            _SendServiceMock.Reset();
         }
 
         [Test]

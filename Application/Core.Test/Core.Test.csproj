@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AppTest.cs" />
     <Compile Include="DataProviderTest.cs" />
+    <Compile Include="Kzn\SendServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
