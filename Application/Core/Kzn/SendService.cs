@@ -1,4 +1,5 @@
-﻿using MeteringDevices.Core.Kzn.Dto;
+﻿using MeteringDevices.Core.Common;
+using MeteringDevices.Core.Kzn.Dto;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -70,10 +71,10 @@ namespace MeteringDevices.Core.Kzn
             }
 
             IDictionary<string, DeviceInfoDto> dictionary = deviceInfoResponse.Counters.Devices.ToDictionary(d => d.UniqueId, StringComparer.Ordinal);
-
-            if (dictionary.Count != values.Count)
+            
+            if (!EnumerableUtils.EquivalentOfEquatables(dictionary.Keys, values.Keys))
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "The numbers of devices are different: {0} and {1}.", dictionary.Count, values.Count));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "The device sets are different: {0} and {1}.", dictionary.Keys, values.Keys));
             }
 
             foreach (KeyValuePair<string, DeviceInfoDto> pair in dictionary)
