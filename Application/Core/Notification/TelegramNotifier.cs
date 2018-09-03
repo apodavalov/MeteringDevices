@@ -11,7 +11,7 @@ namespace MeteringDevices.Core.Notification
         private readonly long _ChatId;
         private readonly IRestSharpFactory _RestSharpFactory;
 
-        public TelegramNotifier(string baseUrl, string token, long chatId, IRestSharpFactory restSharpFactory)
+        public TelegramNotifier(string baseUrl, string token, long chatId, IRestSharpFactory restSharpFactory, Uri proxyUri)
         {
             if (baseUrl == null)
             {

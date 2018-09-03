@@ -6,6 +6,7 @@ using MeteringDevices.Data;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Modules;
+using System;
 
 namespace MeteringDevices.Core
 {
@@ -14,6 +15,7 @@ namespace MeteringDevices.Core
         private const string _NotifierTelegramBaseUrl = "Notifier.Telegram.BaseUrl";
         private const string _NotifierTelegramToken = "Notifier.Telegram.Token";
         private const string _NotifierTelegramChatId = "Notifier.Telegram.ChatId";
+        private const string _NotifierTelegramProxyUri = "Notifier.Telegram.ProxyUri";
 
         private const string _KznUsernameKey = "Kzn.Service.Username";
         private const string _KznPasswordKey = "Kzn.Service.Password";
@@ -97,11 +99,14 @@ namespace MeteringDevices.Core
 
         private INotifier CreateNotifier(IContext arg)
         {
+            string proxyUriString = ConfigUtils.GetStringFromConfig(_NotifierTelegramProxyUri);
+
             return new TelegramNotifier(
                 ConfigUtils.GetStringFromConfig(_NotifierTelegramBaseUrl),
-                ConfigUtils.GetStringFromConfig(_NotifierTelegramToken), 
+                ConfigUtils.GetStringFromConfig(_NotifierTelegramToken),
                 ConfigUtils.GetLongFromConfig(_NotifierTelegramChatId),
-                Kernel.Get<IRestSharpFactory>()
+                Kernel.Get<IRestSharpFactory>(),
+                proxyUriString == null ? null : new Uri(proxyUriString)                
             );
         }
     }
