@@ -7,23 +7,53 @@ namespace MeteringDevices.Core.Spb
 {
     class RetrieverService : IRetrieveService
     {
-        private readonly string _DayMeteringDeviceId;
-        private readonly string _NightMeteringDeviceId;
+        private readonly string _DayMeteringDeviceLabel;
+        private readonly string _NightMeteringDeviceLabel;
+        private readonly string _KitchenColdMeteringDeviceLabel;
+        private readonly string _KitchenHotMeteringDeviceLabel;
+        private readonly string _BathroomColdMeteringDeviceLabel;
+        private readonly string _BathroomHotMeteringDeviceLabel;
 
-        public RetrieverService(string dayMeteringDeviceId, string nightMeteringDeviceId)
+        public RetrieverService(string dayMeteringDeviceLabel, string nightMeteringDeviceLabel,
+            string kitchenColdMeteringDeviceLabel, string kitchenHotMeteringDeviceLabel,
+            string bathroomColdMeteringDeviceLabel, string bathroomHotMeteringDeviceLabel)
         {
-            if (dayMeteringDeviceId == null)
+            if (dayMeteringDeviceLabel == null)
             {
-                throw new ArgumentNullException(nameof(dayMeteringDeviceId));
+                throw new ArgumentNullException(nameof(dayMeteringDeviceLabel));
             }
 
-            if (nightMeteringDeviceId == null)
+            if (nightMeteringDeviceLabel == null)
             {
-                throw new ArgumentNullException(nameof(nightMeteringDeviceId));
+                throw new ArgumentNullException(nameof(nightMeteringDeviceLabel));
             }
 
-            _DayMeteringDeviceId = dayMeteringDeviceId;
-            _NightMeteringDeviceId = nightMeteringDeviceId;
+            if (kitchenColdMeteringDeviceLabel == null)
+            {
+                throw new ArgumentNullException(nameof(kitchenColdMeteringDeviceLabel));
+            }
+
+            if (kitchenHotMeteringDeviceLabel == null)
+            {
+                throw new ArgumentNullException(nameof(kitchenHotMeteringDeviceLabel));
+            }
+
+            if (bathroomColdMeteringDeviceLabel == null)
+            {
+                throw new ArgumentNullException(nameof(bathroomColdMeteringDeviceLabel));
+            }
+
+            if (bathroomHotMeteringDeviceLabel == null)
+            {
+                throw new ArgumentNullException(nameof(bathroomHotMeteringDeviceLabel));
+            }
+
+            _DayMeteringDeviceLabel = dayMeteringDeviceLabel;
+            _NightMeteringDeviceLabel = nightMeteringDeviceLabel;
+            _KitchenColdMeteringDeviceLabel = kitchenColdMeteringDeviceLabel;
+            _KitchenHotMeteringDeviceLabel = kitchenHotMeteringDeviceLabel;
+            _BathroomColdMeteringDeviceLabel = bathroomColdMeteringDeviceLabel;
+            _BathroomHotMeteringDeviceLabel = bathroomHotMeteringDeviceLabel;
         }
 
         public IDictionary<string, int> GetCurrentValues(ISession session)
@@ -42,8 +72,12 @@ namespace MeteringDevices.Core.Spb
 
             return new Dictionary<string, int>(StringComparer.Ordinal)
             {
-                { _DayMeteringDeviceId, currentValues.Day },
-                { _NightMeteringDeviceId, currentValues.Night }
+                { _DayMeteringDeviceLabel, currentValues.Day },
+                { _NightMeteringDeviceLabel, currentValues.Night },
+                { _KitchenColdMeteringDeviceLabel, currentValues.KitchenCold },
+                { _KitchenHotMeteringDeviceLabel, currentValues.KitchenHot },
+                { _BathroomColdMeteringDeviceLabel, currentValues.BathroomCold },
+                { _BathroomHotMeteringDeviceLabel, currentValues.BathroomHot }
             };
         }
     }

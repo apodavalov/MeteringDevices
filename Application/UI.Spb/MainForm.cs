@@ -35,6 +35,10 @@ namespace MeteringDevices.UI.Spb
 
                         int day = GetTextBoxIntValue(tb_Day);
                         int night = GetTextBoxIntValue(tb_Night);
+                        int kitchenCold = GetTextBoxIntValue(tb_KitchenCold);
+                        int kitchenHot = GetTextBoxIntValue(tb_KitchenHot);
+                        int bathroomCold = GetTextBoxIntValue(tb_BathroomCold);
+                        int bathroomHot = GetTextBoxIntValue(tb_BathroomHot);
 
                         CurrentMeteringValue currentValue = session.SpbCurrentMeteringValueRepository.Fetch().AsEnumerable().SingleOrDefault();
 
@@ -44,11 +48,19 @@ namespace MeteringDevices.UI.Spb
                         {
                             int diffDay = Math.Abs(currentValue.Day - day);
                             int diffNight = Math.Abs(currentValue.Night - night);
+                            int diffKitchenCold = Math.Abs(currentValue.KitchenCold - kitchenCold);
+                            int diffKitchenHot = Math.Abs(currentValue.KitchenHot - kitchenHot);
+                            int diffBathroomCold = Math.Abs(currentValue.BathroomCold - bathroomCold);
+                            int diffBathroomHot = Math.Abs(currentValue.BathroomHot - bathroomHot);
 
                             dialogResult = MessageBox.Show(
                                 string.Format("Разница между предсказанными и введёнными значениями.{0}{0}" + 
                                               "Дневное энергопотребление.{0}- Предсказанное: {1}, введённое: {2}, разница (абс. зн.): {3}.{0}" +
                                               "Ночное энергопотребление.{0}- Предсказанное: {4}, введённое: {5}, разница (абс. зн.): {6}.{0}" +
+                                              "Холодная вода (кухня).{0}- Предсказанное: {7}, введённое: {8}, разница (абс. зн.): {9}.{0}" +
+                                              "Горячая вода (кухня).{0}- Предсказанное: {10}, введённое: {11}, разница (абс. зн.): {12}.{0}" +
+                                              "Холодная вода (ванная).{0}- Предсказанное: {13}, введённое: {14}, разница (абс. зн.): {15}.{0}" +
+                                              "Горячая вода (ванная).{0}- Предсказанное: {16}, введённое: {17}, разница (абс. зн.): {18}.{0}" +
                                               "{0}Подтверждаете отправку введённых значений?", 
                                               Environment.NewLine,
                                               currentValue.Day,
@@ -56,7 +68,19 @@ namespace MeteringDevices.UI.Spb
                                               diffDay,
                                               currentValue.Night,
                                               night, 
-                                              diffNight), 
+                                              diffNight,
+                                              currentValue.KitchenCold,
+                                              kitchenCold,
+                                              diffKitchenCold,
+                                              currentValue.KitchenHot,
+                                              kitchenHot,
+                                              diffKitchenHot,
+                                              currentValue.BathroomCold,
+                                              bathroomCold,
+                                              diffBathroomCold,
+                                              currentValue.BathroomHot,
+                                              bathroomHot,
+                                              diffBathroomHot), 
                                               "Подтверждение", 
                                               MessageBoxButtons.YesNo, 
                                               MessageBoxIcon.Question, 
@@ -75,7 +99,11 @@ namespace MeteringDevices.UI.Spb
                         MeteringValue value = new MeteringValue
                         {
                             Day = day,
-                            Night = night
+                            Night = night,
+                            KitchenCold = kitchenCold,
+                            KitchenHot = kitchenHot,
+                            BathroomCold = bathroomCold,
+                            BathroomHot = bathroomHot
                         };
 
                         WriteResult result = session.SpbMeteringValueRepository.Store(value);
@@ -156,6 +184,10 @@ namespace MeteringDevices.UI.Spb
                 {
                     tb_Night.Text = currentValue.Night.ToString();
                     tb_Day.Text = currentValue.Day.ToString();
+                    tb_KitchenCold.Text = currentValue.KitchenCold.ToString();
+                    tb_KitchenHot.Text = currentValue.KitchenHot.ToString();
+                    tb_BathroomCold.Text = currentValue.BathroomCold.ToString();
+                    tb_BathroomHot.Text = currentValue.BathroomHot.ToString();
                 }
             }
 

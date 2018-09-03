@@ -47,18 +47,20 @@
             // 
             this.tb_Day.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Day.Location = new System.Drawing.Point(223, 6);
+            this.tb_Day.Location = new System.Drawing.Point(167, 5);
+            this.tb_Day.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Day.Name = "tb_Day";
-            this.tb_Day.Size = new System.Drawing.Size(191, 22);
+            this.tb_Day.Size = new System.Drawing.Size(144, 20);
             this.tb_Day.TabIndex = 7;
             this.tb_Day.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lb_Day
             // 
             this.lb_Day.AutoSize = true;
-            this.lb_Day.Location = new System.Drawing.Point(12, 9);
+            this.lb_Day.Location = new System.Drawing.Point(7, 8);
+            this.lb_Day.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Day.Name = "lb_Day";
-            this.lb_Day.Size = new System.Drawing.Size(205, 17);
+            this.lb_Day.Size = new System.Drawing.Size(158, 13);
             this.lb_Day.TabIndex = 1;
             this.lb_Day.Text = "Дневное энергопотребление:";
             // 
@@ -66,9 +68,10 @@
             // 
             this.bt_Send.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_Send.Location = new System.Drawing.Point(15, 181);
+            this.bt_Send.Location = new System.Drawing.Point(11, 147);
+            this.bt_Send.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.bt_Send.Name = "bt_Send";
-            this.bt_Send.Size = new System.Drawing.Size(399, 30);
+            this.bt_Send.Size = new System.Drawing.Size(299, 24);
             this.bt_Send.TabIndex = 13;
             this.bt_Send.Text = "Отправить!";
             this.bt_Send.UseVisualStyleBackColor = true;
@@ -77,9 +80,10 @@
             // lb_Cold
             // 
             this.lb_Cold.AutoSize = true;
-            this.lb_Cold.Location = new System.Drawing.Point(105, 65);
+            this.lb_Cold.Location = new System.Drawing.Point(79, 53);
+            this.lb_Cold.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Cold.Name = "lb_Cold";
-            this.lb_Cold.Size = new System.Drawing.Size(112, 17);
+            this.lb_Cold.Size = new System.Drawing.Size(86, 13);
             this.lb_Cold.TabIndex = 3;
             this.lb_Cold.Text = "Холодная вода:";
             // 
@@ -87,18 +91,20 @@
             // 
             this.tb_Night.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Night.Location = new System.Drawing.Point(223, 34);
+            this.tb_Night.Location = new System.Drawing.Point(167, 28);
+            this.tb_Night.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Night.Name = "tb_Night";
-            this.tb_Night.Size = new System.Drawing.Size(191, 22);
+            this.tb_Night.Size = new System.Drawing.Size(144, 20);
             this.tb_Night.TabIndex = 8;
             this.tb_Night.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lb_Night
             // 
             this.lb_Night.AutoSize = true;
-            this.lb_Night.Location = new System.Drawing.Point(20, 37);
+            this.lb_Night.Location = new System.Drawing.Point(15, 30);
+            this.lb_Night.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Night.Name = "lb_Night";
-            this.lb_Night.Size = new System.Drawing.Size(197, 17);
+            this.lb_Night.Size = new System.Drawing.Size(150, 13);
             this.lb_Night.TabIndex = 2;
             this.lb_Night.Text = "Ночное энергопотребление:";
             // 
@@ -106,18 +112,20 @@
             // 
             this.tb_Hot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Hot.Location = new System.Drawing.Point(223, 90);
+            this.tb_Hot.Location = new System.Drawing.Point(167, 73);
+            this.tb_Hot.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Hot.Name = "tb_Hot";
-            this.tb_Hot.Size = new System.Drawing.Size(191, 22);
+            this.tb_Hot.Size = new System.Drawing.Size(144, 20);
             this.tb_Hot.TabIndex = 10;
             this.tb_Hot.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lb_Hot
             // 
             this.lb_Hot.AutoSize = true;
-            this.lb_Hot.Location = new System.Drawing.Point(114, 93);
+            this.lb_Hot.Location = new System.Drawing.Point(86, 76);
+            this.lb_Hot.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Hot.Name = "lb_Hot";
-            this.lb_Hot.Size = new System.Drawing.Size(103, 17);
+            this.lb_Hot.Size = new System.Drawing.Size(78, 13);
             this.lb_Hot.TabIndex = 4;
             this.lb_Hot.Text = "Горячая вода:";
             // 
@@ -125,9 +133,10 @@
             // 
             this.tb_Cold.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Cold.Location = new System.Drawing.Point(223, 62);
+            this.tb_Cold.Location = new System.Drawing.Point(167, 50);
+            this.tb_Cold.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Cold.Name = "tb_Cold";
-            this.tb_Cold.Size = new System.Drawing.Size(191, 22);
+            this.tb_Cold.Size = new System.Drawing.Size(144, 20);
             this.tb_Cold.TabIndex = 9;
             this.tb_Cold.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
@@ -135,18 +144,20 @@
             // 
             this.tb_Kitchen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Kitchen.Location = new System.Drawing.Point(223, 118);
+            this.tb_Kitchen.Location = new System.Drawing.Point(167, 96);
+            this.tb_Kitchen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Kitchen.Name = "tb_Kitchen";
-            this.tb_Kitchen.Size = new System.Drawing.Size(191, 22);
+            this.tb_Kitchen.Size = new System.Drawing.Size(144, 20);
             this.tb_Kitchen.TabIndex = 11;
             this.tb_Kitchen.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lb_Kitchen
             // 
             this.lb_Kitchen.AutoSize = true;
-            this.lb_Kitchen.Location = new System.Drawing.Point(81, 121);
+            this.lb_Kitchen.Location = new System.Drawing.Point(63, 99);
+            this.lb_Kitchen.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Kitchen.Name = "lb_Kitchen";
-            this.lb_Kitchen.Size = new System.Drawing.Size(136, 17);
+            this.lb_Kitchen.Size = new System.Drawing.Size(102, 13);
             this.lb_Kitchen.TabIndex = 5;
             this.lb_Kitchen.Text = "Отопление (кухня):";
             // 
@@ -154,26 +165,28 @@
             // 
             this.tb_Room.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Room.Location = new System.Drawing.Point(223, 146);
+            this.tb_Room.Location = new System.Drawing.Point(167, 119);
+            this.tb_Room.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tb_Room.Name = "tb_Room";
-            this.tb_Room.Size = new System.Drawing.Size(191, 22);
+            this.tb_Room.Size = new System.Drawing.Size(144, 20);
             this.tb_Room.TabIndex = 12;
             this.tb_Room.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // lb_Room
             // 
             this.lb_Room.AutoSize = true;
-            this.lb_Room.Location = new System.Drawing.Point(62, 149);
+            this.lb_Room.Location = new System.Drawing.Point(48, 122);
+            this.lb_Room.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Room.Name = "lb_Room";
-            this.lb_Room.Size = new System.Drawing.Size(155, 17);
+            this.lb_Room.Size = new System.Drawing.Size(117, 13);
             this.lb_Room.TabIndex = 6;
             this.lb_Room.Text = "Отопление (комната):";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 223);
+            this.ClientSize = new System.Drawing.Size(320, 181);
             this.Controls.Add(this.tb_Room);
             this.Controls.Add(this.lb_Room);
             this.Controls.Add(this.tb_Kitchen);
@@ -188,6 +201,7 @@
             this.Controls.Add(this.lb_Day);
             this.Controls.Add(this.tb_Day);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

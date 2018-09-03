@@ -28,22 +28,20 @@ namespace MeteringDevices.Core
         private const string _KznMeteringDeviceColdIdKey = "Kzn.MeteringDevice.ColdId";
         private const string _KznMeteringDeviceHotIdKey = "Kzn.MeteringDevice.HotId";
 
-        private const string _SpbUsernameKey = "Spb.Service.Username";
-        private const string _SpbPasswordKey = "Spb.Service.Password";
-        private const string _SpbBaseUrlKey = "Spb.Service.BaseUrl";
-
         private const string _SpbAccountNumberKey = "Spb.AccountNumber";
         private const string _SpbEnabledKey = "Spb.Enabled";
-        private const string _SpbMeteringDeviceDayIdKey = "Spb.MeteringDevice.DayId";
-        private const string _SpbMeteringDeviceNightIdKey = "Spb.MeteringDevice.NightId";
-        
+        private const string _SpbMeteringDeviceDayLabelKey = "Spb.MeteringDevice.DayLabel";
+        private const string _SpbMeteringDeviceNightLabelIdKey = "Spb.MeteringDevice.NightLabel";
+        private const string _SpbMeteringDeviceKitchenColdLabelKey = "Spb.MeteringDevice.KitchenColdLabel";
+        private const string _SpbMeteringDeviceKitchenHotLabelKey = "Spb.MeteringDevice.KitchenHotLabel";
+        private const string _SpbMeteringDeviceBathroomColdLabelKey = "Spb.MeteringDevice.BathroomColdLabel";
+        private const string _SpbMeteringDeviceBathroomHotLabelKey = "Spb.MeteringDevice.BathroomHotLabel";
+
         public override void Load()
         {
             Kernel.Bind<Kzn.ISendApiService>().ToMethod(CreateKznSendApiService).InSingletonScope();
-            Kernel.Bind<Spb.IAccountsApiService>().ToMethod(CreateSpbAccountsApiService).InSingletonScope();
             Kernel.Bind<IJsonSerializerFactory>().To<JsonSerializerFactory>().InSingletonScope();
             Kernel.Bind<IRestSharpFactory>().To<RestSharpFactory>().InSingletonScope();
-            Kernel.Bind<ISendApiServiceFactory>().To<SendApiServiceFactory>();
             Kernel.Bind<INotifier>().ToMethod(CreateNotifier).InSingletonScope();
             Kernel.Bind<IApp>().ToMethod(CreateApp).InSingletonScope();
         }
@@ -51,11 +49,6 @@ namespace MeteringDevices.Core
         private Kzn.ISendApiService CreateKznSendApiService(IContext arg)
         {
             return new Kzn.SendApiService(arg.Kernel.Get<IRestSharpFactory>(), ConfigUtils.GetStringFromConfig(_KznBaseUrlKey));
-        }
-
-        private IAccountsApiService CreateSpbAccountsApiService(IContext arg)
-        {
-            return new Spb.AccountsApiService(arg.Kernel.Get<IRestSharpFactory>(), ConfigUtils.GetStringFromConfig(_SpbBaseUrlKey));
         }
 
         private IApp CreateApp(IContext arg)
@@ -82,15 +75,14 @@ namespace MeteringDevices.Core
                     arg.Kernel.Get<ISessionFactory>(),
                     arg.Kernel.Get<INotifier>(),
                     new Spb.RetrieverService(
-                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceDayIdKey),
-                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceNightIdKey)
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceDayLabelKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceNightLabelIdKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceKitchenColdLabelKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceKitchenHotLabelKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceBathroomColdLabelKey),
+                        ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceBathroomHotLabelKey)
                     ),
-                    new Spb.SendService(
-                        arg.Kernel.Get<ISendApiServiceFactory>(),
-                        arg.Kernel.Get<IAccountsApiService>(),
-                        ConfigUtils.GetStringFromConfig(_SpbUsernameKey),
-                        ConfigUtils.GetStringFromConfig(_SpbPasswordKey)
-                    ),
+                    new Spb.SendService(),
                     ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
                     ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)
                )

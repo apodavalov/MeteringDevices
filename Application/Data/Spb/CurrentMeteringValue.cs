@@ -27,5 +27,33 @@ namespace MeteringDevices.Data.Spb
             get;
             set;
         }
+
+        [Column("KitchenCold")]
+        public int KitchenCold
+        {
+            get;
+            set;
+        }
+
+        [Column("KitchenHot")]
+        public int KitchenHot
+        {
+            get;
+            set;
+        }
+
+        [Column("BathroomCold")]
+        public int BathroomCold
+        {
+            get;
+            set;
+        }
+
+        [Column("BathroomHot")]
+        public int BathroomHot
+        {
+            get;
+            set;
+        }
     }
 }
