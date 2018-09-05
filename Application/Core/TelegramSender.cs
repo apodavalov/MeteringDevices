@@ -3,15 +3,15 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 
-namespace MeteringDevices.Core.Notification
+namespace MeteringDevices.Core
 {
-    class TelegramNotifier : INotifier
+    class TelegramSender : IIMSender
     {
         private readonly IRestClient _RestClient;
         private readonly long _ChatId;
         private readonly IRestSharpFactory _RestSharpFactory;
 
-        public TelegramNotifier(string baseUrl, string token, long chatId, IRestSharpFactory restSharpFactory, Uri proxyUri)
+        public TelegramSender(string baseUrl, string token, long chatId, IRestSharpFactory restSharpFactory, Uri proxyUri)
         {
             if (baseUrl == null)
             {
@@ -38,7 +38,7 @@ namespace MeteringDevices.Core.Notification
             _RestSharpFactory = restSharpFactory;
         }
 
-        public void Notify(string message)
+        public void Send(string message)
         {
             if (message == null)
             {
@@ -70,7 +70,6 @@ namespace MeteringDevices.Core.Notification
 
         }
     }
-
     class TelegramStatus
     {
         [JsonProperty("ok")]
