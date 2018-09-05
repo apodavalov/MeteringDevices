@@ -39,5 +39,18 @@ namespace MeteringDevices.Core.Common
 
             return result;
         }
+
+        public static int GetIntFromConfig(string key, int defaultValue = 0)
+        {
+            string stringValue = GetStringFromConfig(key, string.Empty);
+            int result;
+
+            if (!int.TryParse(stringValue, out result))
+            {
+                return defaultValue;
+            }
+
+            return result;
+        }
     }
 }

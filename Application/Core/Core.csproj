@@ -63,8 +63,10 @@
     <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="Common\EnumerableUtils.cs" />
+    <Compile Include="CurrentDateTimeProvider.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="IApp.cs" />
+    <Compile Include="ICurrentDateTimeProvider.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IRetrieveService.cs" />
     <Compile Include="ISendService.cs" />

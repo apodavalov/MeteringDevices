@@ -23,6 +23,7 @@ namespace MeteringDevices.Core
 
         private const string _KznAccountNumberKey = "Kzn.AccountNumber";
         private const string _KznEnabledKey = "Kzn.Enabled";
+        private const string _KznDayOfMonthToSendKey = "Kzn.DayOfMonthToSend";
         private const string _KznMeteringDeviceDayIdKey = "Kzn.MeteringDevice.DayId";
         private const string _KznMeteringDeviceNightIdKey = "Kzn.MeteringDevice.NightId";
         private const string _KznMeteringDeviceColdIdKey = "Kzn.MeteringDevice.ColdId";
@@ -30,6 +31,7 @@ namespace MeteringDevices.Core
 
         private const string _SpbAccountNumberKey = "Spb.AccountNumber";
         private const string _SpbEnabledKey = "Spb.Enabled";
+        private const string _SpbDayOfMonthToSendKey = "Spb.DayOfMonthToSend";
         private const string _SpbMeteringDeviceDayLabelKey = "Spb.MeteringDevice.DayLabel";
         private const string _SpbMeteringDeviceNightLabelIdKey = "Spb.MeteringDevice.NightLabel";
         private const string _SpbMeteringDeviceKitchenColdLabelKey = "Spb.MeteringDevice.KitchenColdLabel";
@@ -43,6 +45,7 @@ namespace MeteringDevices.Core
             Kernel.Bind<IJsonSerializerFactory>().To<JsonSerializerFactory>().InSingletonScope();
             Kernel.Bind<IRestSharpFactory>().To<RestSharpFactory>().InSingletonScope();
             Kernel.Bind<INotifier>().ToMethod(CreateNotifier).InSingletonScope();
+            Kernel.Bind<ICurrentDateTimeProvider>().To<CurrentDateTimeProvider>();
             Kernel.Bind<IApp>().ToMethod(CreateApp).InSingletonScope();
         }
 
@@ -68,8 +71,10 @@ namespace MeteringDevices.Core
                         ConfigUtils.GetStringFromConfig(_KznUsernameKey),
                         ConfigUtils.GetStringFromConfig(_KznPasswordKey)
                     ),
+                    arg.Kernel.Get<ICurrentDateTimeProvider>(),
                     ConfigUtils.GetBoolFromConfig(_KznEnabledKey),
-                    ConfigUtils.GetStringFromConfig(_KznAccountNumberKey)
+                    ConfigUtils.GetStringFromConfig(_KznAccountNumberKey),
+                    ConfigUtils.GetIntFromConfig(_KznDayOfMonthToSendKey)
                 ),
                 new DataProvider(
                     arg.Kernel.Get<ISessionFactory>(),
@@ -83,8 +88,10 @@ namespace MeteringDevices.Core
                         ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceBathroomHotLabelKey)
                     ),
                     new Spb.SendService(),
+                    arg.Kernel.Get<ICurrentDateTimeProvider>(),
                     ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
-                    ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey)
+                    ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey),
+                    ConfigUtils.GetIntFromConfig(_SpbDayOfMonthToSendKey)
                )
             );
         }

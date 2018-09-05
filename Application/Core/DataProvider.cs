@@ -13,11 +13,13 @@ namespace MeteringDevices.Core
         private readonly ISendService _SendService;
         private readonly INotifier _Notifier;
         private readonly ISessionFactory _SessionFactory;
+        private readonly ICurrentDateTimeProvider _CurrentDateTimeProvider;
         private readonly bool _Enabled;
         private readonly string _AccountNumber;
+        private readonly int _DayOfMonthToSend;
 
         public DataProvider(ISessionFactory sessionFactory, INotifier notifier, IRetrieveService retrieveService, 
-            ISendService sendService, bool enabled, string accountNumber)
+            ISendService sendService, ICurrentDateTimeProvider currentDateTimeProvider, bool enabled, string accountNumber, int dayOfMonthToSend)
         {
             if (sessionFactory == null)
             {
@@ -39,6 +41,11 @@ namespace MeteringDevices.Core
                 throw new ArgumentNullException(nameof(sendService));
             }
 
+            if (currentDateTimeProvider == null)
+            {
+                throw new ArgumentNullException(nameof(currentDateTimeProvider));
+            }
+
             if (accountNumber == null)
             {
                 throw new ArgumentNullException(nameof(accountNumber));
@@ -49,12 +56,14 @@ namespace MeteringDevices.Core
             _RetrieveService = retrieveService;
             _Notifier = notifier;
             _SendService = sendService;
+            _CurrentDateTimeProvider = currentDateTimeProvider;
             _SessionFactory = sessionFactory;
+            _DayOfMonthToSend = dayOfMonthToSend;
         }
 
         public void Provide()
         {
-            if (!_Enabled)
+            if (!_Enabled || _CurrentDateTimeProvider.GetUtcNow().Day != _DayOfMonthToSend)
             {
                 return;
             }
