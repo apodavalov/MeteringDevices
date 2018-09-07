@@ -28,7 +28,7 @@ namespace MeteringDevices.Core
                 throw new ArgumentNullException(nameof(restSharpFactory));
             }
 
-            _RestClient = restSharpFactory.CreateRestClient();
+            _RestClient = restSharpFactory.CreateRestClient(proxyUri);
 
             UriBuilder uriBuilder = new UriBuilder(baseUrl);
             uriBuilder.Path = token;
