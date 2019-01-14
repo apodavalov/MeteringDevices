@@ -2,11 +2,11 @@
 
 namespace MeteringDevices.Core.Notification
 {
-    class IMNotifier : INotifier
+    class Notifier : INotifier
     {
-        private readonly IIMSender _Sender;
+        private readonly IMessageSender _Sender;
 
-        public IMNotifier(IIMSender sender)
+        public Notifier(IMessageSender sender)
         {
             if (sender == null)
             {

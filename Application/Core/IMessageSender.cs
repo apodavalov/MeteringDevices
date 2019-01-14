@@ -1,6 +1,6 @@
 ﻿namespace MeteringDevices.Core
 {
-    interface IIMSender
+    interface IMessageSender
     {
         void Send(string message);
     }

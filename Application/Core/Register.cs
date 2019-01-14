@@ -11,10 +11,13 @@ namespace MeteringDevices.Core
 {
     public class Register : NinjectModule
     {
-        private const string _IMSenderTelegramBaseUrl = "IMSender.Telegram.BaseUrl";
-        private const string _IMSenderTelegramToken = "IMSender.Telegram.Token";
-        private const string _IMSenderTelegramChatId = "IMSender.Telegram.ChatId";
-        private const string _IMSenderTelegramProxyUri = "IMSender.Telegram.ProxyUri";
+        private const string _MailSenderHost = "MailSender.Host";
+        private const string _MailSenderPort = "MailSender.Port";
+        private const string _MailSenderEnableSsl = "MailSender.EnableSsl";
+        private const string _MailSenderFromAddress = "MailSender.FromAddress";
+        private const string _MailSenderPassword = "MailSender.Password";
+        private const string _MailSenderToAddress = "MailSender.ToAddress";
+        private const string _MailSenderSubject = "MailSender.Subject";
 
         private const string _KznUsernameKey = "Kzn.Service.Username";
         private const string _KznPasswordKey = "Kzn.Service.Password";
@@ -44,7 +47,7 @@ namespace MeteringDevices.Core
             Kernel.Bind<IJsonSerializerFactory>().To<JsonSerializerFactory>().InSingletonScope();
             Kernel.Bind<IRestSharpFactory>().To<RestSharpFactory>().InSingletonScope();
             Kernel.Bind<INotifier>().ToMethod(CreateNotifier).InSingletonScope();
-            Kernel.Bind<IIMSender>().ToMethod(CreateIMSender).InSingletonScope();
+            Kernel.Bind<IMessageSender>().ToMethod(CreateMessageSender).InSingletonScope();
             Kernel.Bind<ICurrentDateTimeProvider>().To<CurrentDateTimeProvider>().InSingletonScope();
             Kernel.Bind<IApp>().ToMethod(CreateApp).InSingletonScope();
         }
@@ -87,7 +90,7 @@ namespace MeteringDevices.Core
                         ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceBathroomColdLabelKey),
                         ConfigUtils.GetStringFromConfig(_SpbMeteringDeviceBathroomHotLabelKey)
                     ),
-                    new Spb.SendService(arg.Kernel.Get<IIMSender>()),
+                    new Spb.SendService(arg.Kernel.Get<IMessageSender>()),
                     arg.Kernel.Get<ICurrentDateTimeProvider>(),
                     ConfigUtils.GetBoolFromConfig(_SpbEnabledKey),
                     ConfigUtils.GetStringFromConfig(_SpbAccountNumberKey),
@@ -98,19 +101,19 @@ namespace MeteringDevices.Core
 
         private INotifier CreateNotifier(IContext arg)
         {
-            return new IMNotifier(arg.Kernel.Get<IIMSender>());
+            return new Notifier(arg.Kernel.Get<IMessageSender>());
         }
 
-        private IIMSender CreateIMSender(IContext arg)
+        private IMessageSender CreateMessageSender(IContext arg)
         {
-            string proxyUriString = ConfigUtils.GetStringFromConfig(_IMSenderTelegramProxyUri);
-
-            return new TelegramSender(
-                ConfigUtils.GetStringFromConfig(_IMSenderTelegramBaseUrl),
-                ConfigUtils.GetStringFromConfig(_IMSenderTelegramToken),
-                ConfigUtils.GetLongFromConfig(_IMSenderTelegramChatId),
-                arg.Kernel.Get<IRestSharpFactory>(),
-                proxyUriString == null ? null : new Uri(proxyUriString)                
+            return new MailSender(
+                ConfigUtils.GetStringFromConfig(_MailSenderHost),
+                ConfigUtils.GetIntFromConfig(_MailSenderPort),
+                ConfigUtils.GetBoolFromConfig(_MailSenderEnableSsl),
+                ConfigUtils.GetStringFromConfig(_MailSenderFromAddress),
+                ConfigUtils.GetStringFromConfig(_MailSenderPassword),
+                ConfigUtils.GetStringFromConfig(_MailSenderToAddress),
+                ConfigUtils.GetStringFromConfig(_MailSenderSubject)                
             );
         }
     }

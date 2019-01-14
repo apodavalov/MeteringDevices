@@ -6,9 +6,9 @@ namespace MeteringDevices.Core.Spb
 {
     class SendService : ISendService
     {
-        private readonly IIMSender _Sender;
+        private readonly IMessageSender _Sender;
 
-        public SendService(IIMSender sender)
+        public SendService(IMessageSender sender)
         {
             if (sender == null)
             {
