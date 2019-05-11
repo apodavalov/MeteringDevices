@@ -27,8 +27,8 @@ namespace MeteringDevices.Core.RestSharp
                 restClient.Proxy = new WebProxy(proxyUri);
             }
 
-            restClient.AddHandler("application/json", _JsonSerializerFactory.CreateDeserializer());
-            restClient.AddHandler("text/json", _JsonSerializerFactory.CreateDeserializer());
+            restClient.AddHandler("application/json", _JsonSerializerFactory.CreateDeserializer);
+            restClient.AddHandler("text/json", _JsonSerializerFactory.CreateDeserializer);
 
             return restClient;
         }
