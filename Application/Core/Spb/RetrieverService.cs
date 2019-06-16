@@ -74,10 +74,10 @@ namespace MeteringDevices.Core.Spb
             {
                 { _DayMeteringDeviceLabel, currentValues.Day },
                 { _NightMeteringDeviceLabel, currentValues.Night },
-                { _KitchenColdMeteringDeviceLabel, currentValues.KitchenCold },
-                { _KitchenHotMeteringDeviceLabel, currentValues.KitchenHot },
-                { _BathroomColdMeteringDeviceLabel, currentValues.BathroomCold },
-                { _BathroomHotMeteringDeviceLabel, currentValues.BathroomHot }
+                { _KitchenColdMeteringDeviceLabel, currentValues.KitchenCold / 1000 },
+                { _KitchenHotMeteringDeviceLabel, currentValues.KitchenHot / 1000 },
+                { _BathroomColdMeteringDeviceLabel, currentValues.BathroomCold / 1000 },
+                { _BathroomHotMeteringDeviceLabel, currentValues.BathroomHot / 1000 }
             };
         }
     }
